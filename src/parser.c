@@ -63,10 +63,28 @@ fsdp_parse(const char *text_description, fsdp_description_t *dsc)
   const char *p = text_description, *p2;
   unsigned int index, j;
   /* temps for sscanf */
+
+#ifdef _MSC_VER
+#ifdef TEMPCHARS
+#undef TEMPCHARS
+#endif // TEMPCHARS
+#define TEMPCHARS 6
+#else
   const unsigned int TEMPCHARS = 6;
+#endif // _MSC_VER
+
   char fsdp_buf[TEMPCHARS][MAXSHORTFIELDLEN];
   char longfsdp_buf[MAXLONGFIELDLEN];
+
+#ifdef _MSC_VER
+#ifdef TEMPINTS
+#undef TEMPINTS
+#endif // TEMPINTS
+#define TEMPINTS 2
+#else
   const unsigned int TEMPINTS = 2;
+#endif // _MSC_VER
+
   unsigned long int wuint[TEMPINTS];
 
   if ( (NULL == text_description) || (NULL == dsc) )
