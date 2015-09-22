@@ -50,5 +50,13 @@
     <ClInclude Include="..\src\freesdp\formatter.h">
       <Filter>Header Files\freesdp</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\freesdp\freesdp.h">
+      <Filter>Header Files\freesdp</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="libFreeSDP.def">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

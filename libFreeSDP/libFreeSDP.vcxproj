@@ -20,9 +20,13 @@
     <ClInclude Include="..\src\formatterpriv.h" />
     <ClInclude Include="..\src\freesdp\common.h" />
     <ClInclude Include="..\src\freesdp\formatter.h" />
+    <ClInclude Include="..\src\freesdp\freesdp.h" />
     <ClInclude Include="..\src\freesdp\parser.h" />
     <ClInclude Include="..\src\parserpriv.h" />
     <ClInclude Include="..\src\priv.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="libFreeSDP.def" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{35627A0C-2CB9-46BB-83B1-2593B21B8DDC}</ProjectGuid>
@@ -71,6 +75,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>libFreeSDP.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -89,6 +94,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>libFreeSDP.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
