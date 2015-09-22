@@ -1,0 +1,334 @@
+2004-01-08  Federico Montesino Pouzols <fedemp@altern.org>
+
+	* freesdp.spec.in: added build requirements (autotools).
+
+2003-12-31  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* doc/freesdp.texi: updates (RFCs status)
+
+2003-11-27  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* src/freesdp/common.h, src/parser.c, src/formatter.c: added
+	'text' media type (requested for next draft).
+
+2003-05-01  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* src/freesdp/common.h, src/priv.h, src/common.c, src/parser.c,
+	src/formatter.c: added a_str_attributes[], used in
+	fsdp_get_str_att and fsdp_set_str_att.
+
+2003-02-28  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* configure.ac: release 0.4.4.	
+
+	* src/parser.c, src/formatter.c: replaced mallocs with callocs for
+	structs with pointers.
+
+2003-02-26  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* configure.ac: release 0.4.3.
+	* src/formatter.c: (all fsdp_set_... functions that set string
+	values): free previous string if not null.	
+	* demo/README, demo/modifydemo.c: get file name and other updates.
+
+2003-02-25  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* demo/Makefile.am, demo/modifydemo.c: new demo on how to parse and
+	modify an SDP description.
+	* src/freesdp/freesdp.h: header includes fixes.
+	* src/formatter.c: print media specific i= lines only when non null.
+	* doc/freesdp.texi: updates.
+	
+2003-02-13  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* src/formatter.c: format unidentified attributes.
+	* src/freesdp/parser.h, src/parser.c: parse unidentified
+	attributes both at session and media level. Added
+	fsdp_get_unidentified_attribute_count,
+	fsdp_get_unidentified_attribute,
+	fsdp_get_media_unidentified_attribute_count and
+	fsdp_get_media_unidentified_attribute.
+	* src/priv.h, src/common.c: added unidentified_attributes and
+	unidentified_attributes_count members to fsdp_description_t_s and
+	fsdp_media_description_t_s.
+
+2003-02-09  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* src/formatter.c: updated calls to fsdp_set_conn_address and
+	fsdp_set_media_conn_address.	
+	* src/freesdp/formatter.h, src/formatter.h: added address_ttl and
+	address_count parameters to fsdp_set_conn_address and
+	fsdp_set_media_conn_address. Modified fsdp_format_bounded to format
+	from the new connection address structure.	
+	* src/freesdp/parser.h, src/parser.c, src/parserpriv.h: added
+	fsdp_get_global_conn_address_count,
+	fsdp_get_global_conn_address_ttl, fsdp_get_media_address_ttl and
+	fsdp_get_media_address_count; modified fsdp_parse_c.
+	* src/priv.h, src/common.c: added fsdp_connection_address_t.
+	* src/freesdp/formatter.h: added fsdp_add_media_rtpmap prototype.
+	* src/formatter.c: bug fix: format all the media descriptions, not
+	just the first.
+
+2003-02-02  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* doc/freesdp.texi: Standards Tracking section updated.
+	* src/freesdp/common.h: removed FSDP_MEDIA_STR_ATT_SDPLANG and
+	FSDP_SESSION_STR_ATT_SDPLANG.
+	* src/priv.h, src/common.c, src/parser.c, src/freesdp/parser.h,
+	src/formatter.c, src/freesdp/formatter.h: a_sdplang replaced with
+	**a_sdplangs and a_sdplangs_count in fsdp_media_description_t_s
+	and fsdp_description_t_s. Updated parser and formatter to handle
+	multiple sdplang attributes, and added the functions
+	fsdp_get_sdplang_count, fsdp_get_sdplang,
+	fsdp_get_media_sdplang_count, fsdp_get_media_sdplang,
+	fsdp_add_sdplang and fsdp_add_media_sdplang. The same applies to
+	the 'lang' attribute. The same also applies to format the 'fmtp'
+	attribute, except that it is only a media-level attribute. Removed
+	the type fsdp_media_str_att_t. Removed the function
+	fsdp_get_media_str_att.
+	
+2003-01-31  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* configure.ac, src/Makefile.am, demo/Makefile.am: release 0.4.1,
+	stop using libtool library versioning for now, till the interface
+	stabilizes.
+	* src/freesdp/common.h, src/errorlist.c: added
+	FSDPE_INVALID_ATTRIBUTE_RTPMAP.
+	* src/priv.h, src/common.c, src/parser.c: Fixed fsdp_parse_rtpmap
+	and rtpmap structure management.
+	* src/parser.c, src/parserpriv.h: sdp_repeat_time_to_uint renamed
+	to use the fsdp prefix. add_rtpmap renamed to fsdp_parse_rtpmap.
+
+2003-01-30  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* demo/rfc-example.sdp: added test for port/count syntax.
+	* src/freesdp/formatter.h, src/formatter.c, demo/formatter.c:
+	format m= lines with optional /port_count
+	specifier. fsdp_make_media takes two unsigned int as port
+	specifier.
+	* src/priv.h, src/common.c, src/parser.c, src/freesdp/parser.h:
+	port in structure fsdp_media_description_t_s is now unsigned int,
+	and port_count is used to specify the number of
+	ports. fsdp_get_media_port now returns an unsigned int.
+	* src/parser.c: scanf rtcp port number as a a '%u'
+	
+2003-01-28  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* src/freesdp/common.h: removed FSDP_SESSION_STR_ATT_RTPMAP and
+	FSDP_MEDIA_STR_ATT_RTPMAP.
+	* demo/parsedemo.c, demo/formatdemo.c: added rtpmap attribute
+	examples.
+	* src/priv.h, src/common.c, src/parser.c, src/formatter.c,
+	src/freesdp/parser.h, src/freesdp/formatter.h: added parsing and
+	formatting of session and media level rtpmap attributes (no longer
+	treated as a string attribute). New formatter functions
+	fsdp_add_rtpmap and fsdp_add_media_rtpmap. New parser functions:
+	fsdp_get_rtpmap_count, fsdp_get_rtpmap_payload_type,
+	fsdp_get_rtpmap_encoding_name, fsdp_get_rtpmap_clock_rate,
+	fsdp_get_rtpmap_encoding_parameters, fsdp_get_media_rtpmap_count,
+	fsdp_get_media_rtpmap_payload_type,
+	fsdp_get_media_rtpmap_encoding_name,
+	fsdp_get_media_rtpmap_clock_rate and
+	fsdp_get_media_rtpmap_encoding_parameters,
+	* src/parser.c: fixed a bug when parsing r= lines.
+	* src/errorlist.c, src/freesdp/common.h: fsdp_strerror return type
+	made const.
+	* src/priv.h, src/parser.c, src/formatter.c,
+	src/freesdp/formatter.h: added support for multiple formats in m=
+	lines. New function fsdp_add_media_format and
+	fsdp_get_media_port_count.
+	* src/formatter: fixed bug when formatting t= lines (NTP offset).
+	
+2003-01-27  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* src/formatter.c: use network_type_strings. Added "" as the first
+	entry of tp_strings. Added media k= lines.
+	* demo/formatdemo.c: added media encryption example.
+	* doc/freesdp.texi: updated.
+
+2003-01-23  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* demo/formatdemo.c: added sendrecv, ptime and maxptime attribute.
+	* src/formatter.c: added bw_mod_type_strings,
+	sendrecv_mode_strings, encryption_method_strings,
+	session_type_strings, media_strings, tp_strings and
+	orient_strings. format media-level orient and sendrecv attributes.
+	* src/parser.c: (fsdp_parse) fixed a bug in media orient attribute
+	("seascape" were not correctly parsed).
+	
+2003-01-21  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* configure.ac: release 0.4.0.	
+	* src/parser.c: (fsdp_parse): strdup from correct buffer
+	(longfsdp_buf) instead of fsdp_buf[i], in s,o,i,u,e,p and r lines.
+
+2003-01-19  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* src/formatter.c: added global c=, t=, r=, z=, k= and
+	session-level attributes lines as well as some media-level
+	attributes. Added bandwidth_modifier_strings,
+	network_type_strings, and address_type_strings.
+	* demo/formatdemo.c: added session type attribute.
+	
+2003-01-17  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* src/formatter.c, demo/formatdemo.c: (fsdp_format_bounded): added
+	global and media specific c= line.
+	* demo/formatdemo.c, demo/parsedemo.c: use the new fsdp_strerror.
+
+2003-01-14  Carlos Palminha <carlos.palminha@inov.pt>
+	* src/errorlist.c: New file with translation table (from
+	fsdp_error_t to string).
+	* src/Makefile.am: Added errorlist.c to the common library file
+	build process.
+	* src/freesdp/common.h: New prototype function for fsdp_strerror.
+	* TODO: Removed the task "Add a table for fsdp_strerror
+	(fsdp_error_t error);".
+2003-01-12  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* src/parser.c, src/freesdp/parser.h: (fsdp_get_uri): removed the
+	index parameter.(fsdp_get_media): return value made const.
+	* src/parser.c, src/common.c, src/priv.h: modified announcements
+	vector in fsdp_description_t in order to support the changes to
+	the formatter module.
+	* src/parser.c, src/common.c, src/priv.h: modified time periods
+	and repeats vectors in fsdp_description_t in order to support the
+	changes to the formatter module.
+	* src/formatter.c, src/priv.h, src/freesdp/formatter.h: rearranged
+	some functions to avoid inconsistent lines, and added some others
+	to complete support for the base SDP specification as well as the
+	rtcp parameter.
+	* src/formatter.c, src/freesdp/formatter.h, demo/formatdemo.c,
+	doc/freesdp.texi: fsdp_format_begin renamed to
+	fsdp_make_description.
+	
+2003-01-06  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* configure.ac, src/Makefile.am, demo/Makefile.am: added
+	WARNING_FLAGS var.
+	* doc/fdl.texi, doc/fdlnotice.texi: updated to FDL 1.2.
+	* src/formatter: fixes for ANSI C.
+	
+2002-12-04  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* src/parser.c: implemented media specific rtcp attribute related
+	methods.
+	* src/freesdp/formatter.h, src/formatter.c: implemented
+	fsdp_set_global_conn_network_type,
+	fsdp_set_global_conn_address_type, fsdp_set_encryption_method and
+	fsdp_set_encryption_content.
+	
+2002-11-23  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* configure.ac, Makefile.am, freesdp.lsm.make.in: added lsm file.
+	* configure.ac, Makefile.am, freesdp.spec.in: added spec for rpms.
+
+2002-11-15  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* src/formatter.c, src/formatterpriv.h, src/freesdp/formatter.h:
+	fsdp_add_email and fsdp_add_phone renamed and filled in.
+
+2002-10-24  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* configure.ac, NEWS: new release: 0.3.0.
+	* src/parser.c: updated media specific routines to new prototypes.
+	* src/freesdp/parser.h: added fsdp_get_media routine, and changed
+	media specific routines.
+	* src/freesdp/comon.h, src/priv.h: declare
+	fsdp_media_description_t in common.h
+
+2002-10-03  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* src/priv.h, src/parser.c, src/freesdp/parser.h: added support
+	for rtcp attribute.
+
+2002-09-21  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* doc/freesdp.texi: updated `Standard Tracks' section and a number
+	of assorted things.
+
+2002-09-18  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* src/freesdp/common.h, src/parser.c: added support for new
+	transport protocols: TCP, UDPTL, vat and rtp (old).
+
+2002-09-17  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* src/freesdp/common.h, src/common.c: added
+	fsdp_description_recycle(fsdp_description_t*).
+
+	* src/parser.c: check FSDPE_MISSING_CONNECTION_INFO at the end of
+	fsdp_parse.
+
+2002-09-14  Federico Montesino Pouzols  <fedemp@altern.org>
+	
+	* doc/freesdp.texi: some updates and fixes.
+	
+	* configure.ac, src/Makefile.am: updated version and libtool
+	versioning made to work.
+
+	* demo/parsedemo.c: warn when file cannot be read.
+	
+	* src/freesdp/parser.h: modified prototypes of media b= lines
+	related access methods.
+	
+	* src/common.c, src/parserpriv.h, src/parser.c: more b= related
+	modifications.
+	
+2002-09-12  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* src/common.c, src/parser.c: modified for new b= related internal
+	structs definitions.
+
+2002-09-07  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* src/freesdp/parser.h, src/parser.c: modified bw_modifier related
+	methods so that several bandwidth modifiers values can be got.
+
+	* src/priv.h, src/parser.c: new typedef struct fsdp_bw_modifier_t.
+
+	* src/priv.h, src/freesdp/common.h: moved all structs ahead
+	declarations, except the fsdp_description_t_s one, to priv.h
+	
+2002-09-06  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* src/priv.h: removed mutex stuff.
+
+	* src/priv.h, src/freesdp/common.h: structures that should be
+	private moved from common.h to priv.h.
+
+2002-09-05  Federico Montesino Pouzols  <fedemp@altern.org>
+
+	* src/freesdp/common.h src/parser.c: added RS and RR bandwidth
+	modifiers and several b= lines support.
+
+	* doc/freesdp.texi: added reference to draft-ietf-avt-rtcp-bw.
+
+	* demo/3.sdp: test for RS and RR.
+
+2002-09-04  Federico Montesino Pouzols  <fedemp@suidzer0.org>
+
+	* doc/freesdp.texi: doc updates.
+
+2002-08-30  Federico Montesino Pouzols  <fedemp@suidzer0.org>
+
+	* First public release: 0.1
+
+2002-08-27  Federico Montesino Pouzols  <fedemp@suidzer0.org>
+
+	* doc/freesdp.texi: small fix for fdlnotice.
+
+2002-08-26  Federico Montesino Pouzols  <fedemp@suidzer0.org>
+
+	* doc/Makefile.am, doc/fdlnotice.texinfo, doc/fdlnotice.texi:
+	fdlnotice.teinfo renamed to fdlnotice.texi.
+	* doc/freesdp.texi: updated data types, parsing and formatting
+	module descriptions, and references to standards.
+
+2002-08-24  Federico Montesino Pouzols  <fedemp@suidzer0.org>
+
+	* src/parser.c, src/formatter.c: general clean up and better
+	parameter checking.
+
+	* src/freesdp/common.h: added some missing _UNDEFINED enumerated
+	values.

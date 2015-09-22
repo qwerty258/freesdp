@@ -1,0 +1,24 @@
+* 0.5.0 -
+
+Added 'text' media type
+
+New demo: modifydemo
+
+Support for unknown/unidentified attributes
+
+* 0.3.0 - Oct 24, 2002
+
+Added support for rtcp attribute.
+
+New public type fsdp_media_description_t, and method fsdp_get_media.
+
+Improved (cleaner an more efficient) media specific methods interface.
+
+* 0.2.0 - Sep 15 2002
+
+Structs previously in common.h moved to private header. Added support
+for several bandwidth modifier lines.
+
+* 0.1.1: added support for RS and RR bandwidth modifiers - Sep 5 2002
+
+* Aug 30 2002 first version (0.1.0) released!

@@ -1,0 +1,739 @@
+\input texinfo    @c -*-texinfo-*-
+@c %** start of header
+@setfilename freesdp.info
+@settitle FreeSDP - A Free SDP Parser and Formatter
+@afourpaper
+@setchapternewpage odd
+@documentlanguage en
+@documentencoding ISO-8859-1
+@c %** end of header
+
+@set EDITION 0.4.0
+@set VERSION 0.4.0
+@set UPDATED January 2003
+
+@dircategory Development
+@direntry
+* FreeSDP: (freesdp).               FreeSDP Library manual
+@end direntry
+
+@c -----------------------------------------------------------------------
+
+@c %** start of summary description and copyright
+@ifnottex
+@acronym{FreeSDP} is a library that provides a complete set of
+functions to parse and format @acronym{SDP} multimedia session
+descriptions (see @acronym{RFC} 2327 and draft-ietf-mmusic-sdp-new).
+
+Copyright @copyright{} 2001, 2002, 2003 Federico Montesino Pouzols
+@email{fedemp@@altern.org}.
+@include fdlnotice.texi
+@end ifnottex
+@c %** end of summary description and copyright
+
+@c -----------------------------------------------------------------------
+
+@c %** start of title and copyright page
+@shorttitlepage @titlefont{FreeSDP}
+@titlepage
+@sp 10
+@title FreeSDP Manual
+@subtitle A Free SDP Parser and Formatter
+@subtitle @value{EDITION}th Edition, covering FreeSDP version @value{VERSION}
+@subtitle @value{UPDATED}
+@author Federico Montesino Pouzols
+
+@page
+@vskip 0pt plus 1filll
+@center{Copyright @copyright{} 2001, 2002, 2003 Federico Montesino Pouzols}
+@include fdlnotice.texi
+@page
+@end titlepage
+@c %** end of title and copyright page
+
+
+@c -----------------------------------------------------------------------
+
+@c %** start of top node and master menu
+@ifnottex
+@node Top
+@top
+This document describes @acronym{FreeSDP}, a library for parsing and
+formatting @acronym{SDP} multimedia session descriptions. SDP is the
+Session Description Protocol from the IETF (see @cite{RFC 2327} and
+@cite{draft-ietf-mmusic-sdp-new}).
+
+This is the edition @value{EDITION} of this manual and documents
+@acronym{FreeSDP} version @value{VERSION}.
+@end ifnottex
+
+
+@contents
+
+
+@menu
+* Introduction::                  What @acronym{SDP} and FreeSDP are.
+* FreeSDP Overview::              The library at a glance.
+* Standards Tracking::            @acronym{IETF} Standards conformance.
+* Using FreeSDP::                 Programming with FreeSDP overview.
+* Parsing::                       Parsing @acronym{SDP} descriptions with FreeSDP.
+* Formatting::                    Formatting @acronym{SDP} descriptions with FreeSDP.
+* FreeSDP Internals::             How FreeSDP internally works. 
+* Other Related Works::           Other @acronym{SDP} related libraries and tools.
+* Future Work::                   Future of @acronym{SDP} and FreeSDP.
+* Licenses::                      Library and documentation licenses.
+* Data Type Index::               Index of data types in FreeSDP.
+* Function Index::                Index of functions in FreeSDP.
+* Concept Index::                 Index of concepts.
+@end menu
+@c %** end of top node and master menu
+
+@c -----------------------------------------------------------------------
+
+@c %** start of body
+@node Introduction
+@comment  node-name,  next,  previous,  up
+@chapter Introduction
+@cindex Introduction
+
+@cindex C
+@cindex C programming language
+FreeSDP is a C library that provides a complete set of functions to
+fetch the information multimedia session descriptions in @acronym{SDP}
+format enclose. It can also format FreeSDP descriptions from the
+necessary session parameters. Its purpose is to allow for fully
+parsing and formatting of SDP descriptions while abstracting the
+concrete syntax of SDP.
+
+FreeSDP is free software. Everyone can use and redistribute it on a
+free basis. Note that from a legal point of view free software has
+nothing to do with public domain. Also note that from a philosophical
+point of view free software has nothing to do with open source
+software. Though free software and open software communities often
+cooperate their goals deeply differ. For a better discussion of this
+issues you may look at
+@uref{http://www.fsf.org/philosophy/philosophy.html} and the
+@uref{http://www.fsf.org} site as a whole. FreeSDP is licensed under
+the GNU General Public License @xref{GNU General Public License}.
+
+@cindex Mbone
+@cindex Internet
+@cindex multicast
+The Session Description Protocol @acronym{SDP} has been developed
+within and is in widespread use in the Mbone, the multicast backbone
+of the Internet, where multimedia session announcements are publicized
+through the use of the web, e-mail and the Session Announcement
+Protocol (@acronym{SAP}, @cite{RFC 2974}). In addition, it is
+currently the primary means for session description in the Session
+Initiation Protocol (@acronym{SIP}, @cite{RFC 3261}) and the Real Time
+Streaming Protocol (@acronym{RTSP}, @cite{RFC 2326}).
+
+@cindex MMUSIC
+@cindex working group
+@cindex Internet Engineering Task Force
+@cindex IETF
+@cindex Multipary Multimedia Session Control working group
+The @acronym{SDP} protocol is developed by the @acronym{MMUSIC}
+(Multiparty Multimedia Session Control) working group of the Internet
+Engineering Task Force (@uref{http://www.ietf.org}), @acronym{IETF}
+henceforth.  See
+(@uref{http://www.ietf.org/html.charters/mmusic-charter.html}) for
+info on the @acronym{MMUSIC} working group.
+
+The first standard definition of @acronym{SDP}, @acronym{RFC} 2327,
+states that:
+
+@quotation
+SDP is intended for describing multimedia sessions for the purposes of
+session announcement, session invitation, and other forms of
+multimedia session initiation.
+@end quotation
+
+@cindex SDP standard
+@cindex RFC 2327
+This document describes FreeSDP and assumes a certain level of
+familiarity with multimedia sessions in Internet. The reader new to
+this field should have a look at the aforementioned references before
+starting to use FreeSDP. The first sections of the @acronym{RFC} 2327
+provide a good introduction to multimedia session description.
+
+@cindex Reference manual
+Note that this document is not a reference manual for FreeSDP. The
+reference manual is automatically generated from source files through
+Doxygen (see @url{http://www.doxygen.org}) under the doc/refman
+directory in the source distribution.
+
+@cindex IETF
+@cindex SDP extensions
+@cindex protocol extensions
+In section @ref{FreeSDP Overview}, a brief description of the library
+is provided. Its level of conformance with the @acronym{IETF}
+standards is discussed in @ref{Standards Tracking}.
+
+In @ref{Using FreeSDP}, how to program with FreeSDP is explained. This
+section introduces the two modules of FreeSDP: the parser and the
+formatter, which are further explained in sections @ref{Parsing} and
+@ref{Formatting}, respectively. @ref{FreeSDP Internals} outlines how
+@acronym{FreeSDP} does its work and how to hack it.
+
+Finally, @ref{Other Related Works} provides information on resources
+that may be of interest for people working with @acronym{SDP} and
+multimedia conferences, and @ref{Future Work} outlines how
+@acronym{SDP} and FreeSDP are expected to evolve.
+
+
+@c -----------------------------------------------------------------------
+@node FreeSDP Overview
+@chapter FreeSDP Overview
+@cindex FreeSDP Overview
+
+@cindex Minimality
+@cindex Security
+@cindex Speed
+@cindex Thread-safety
+FreeSDP provides a complete set of entry points to parse and format
+FreeSDP descriptions. It aims to be minimal, secure and fast, as well
+as supporting multi-thread programming.
+
+FreeSDP manages SDP descriptions through objects of the type
+@code{fsdp_description_t}. These objects are dynamically built and
+destroyed using @code{fsdp_description_new} and
+@code{fsdp_description_delete}, respectively.
+
+@cindex Parsing module
+@cindex Formatting module
+@cindex Reference manual
+There are two modules in FreeSDP: the parsing module and the
+formatting module. The former consists of the structures and routines
+needed to get the information enclosed in @acronym{SDP} descriptions;
+the latter consists of the structures and routines that format
+@acronym{SDP} descriptions from the parameters provided to the
+library. These are documented separately in the FreeSDP reference
+manual. FreeSDP works parsing @acronym{SDP} descriptions from and
+formatting to memory buffers.
+
+@findex fsdp_parse
+In the parsing module, the routine @code{fsdp_parse} is a constructor
+that builds a description object from a textual @acronym{SDP}
+description located at a memory buffer. Most of the other routines in
+the parsing module (named @code{fsdp_get_xxxx}) provide access to the
+information the description object has been filled with (they are
+access methods of the description object). So a typical program based
+on FreeSDP parses any session description once and first, and then,
+asks about the session properties.
+
+@findex fsdp_format
+Conversely, in the formatting module, @code{fsdp_format} formats (or
+prints) multimedia session descriptions into memory buffers. Before
+calling @code{fsdp_format} a description object must be filled with
+the information to be formatted. The process starts with a call to
+@code{fsdp_make_description} which initializes an object description
+(it is a constructor that builds a description object from the
+necessary session parameters).
+
+So a typical program that uses FreeSDP usually calls
+@code{fsdp_make_description} first and then calls several routines
+(named @code{fsdp_set_xxxx} and @code{fsdp_add_xxxx}) to fill a
+description object with data describing a multimedia session (they are
+methods that modify the description object). When every parameter has
+been set, the application finally calls @code{fsdp_format} in order to
+format the whole description in @acronym{SDP} into a memory
+buffer. Note however that, since the routine
+@code{fsdp_make_description} takes as arguments all the necessary
+parameters to build a complete and standard compliant @acronym{SDP}
+description, a call to @code{fsdp_make_description} followed by a call
+to @code{fsdp_format} formats a minimal standard SDP description.
+
+
+@c -----------------------------------------------------------------------
+@node Standards Tracking
+@chapter Standards Tracking
+@cindex Standards tracking
+
+@quotation
+@strong{Warning:} This chapter is yet uncomplete and subject to quick
+changes.
+@end quotation
+
+@cindex IETF
+@cindex IETF standards
+Since @acronym{SDP} was designed when many of the applications it is
+used today for were not clearly defined yet, several extensions to
+@acronym{SDP} have been proposed in the @acronym{IETF}. This chapter
+specifies which of these extensions @acronym{FreeSDP} implements, as
+well as what @acronym{RFC}'s FreeSDP complies with.
+
+@cindex attribute
+@cindex SDP attribute
+@cindex IANA
+The primary means for extending FreeSDP are attributes, and they can
+be registered with @acronym{IANA}, see the @cite{Session Description
+Protocol (SDP) Parameters} list at IANA
+(@url{http://www.iana.org/assignments/sdp-parameters}).
+
+What follows is a list of SDP related RFCs, Internet Drafts and other
+documents, with notes on the conformance degree currently provided by
+FreeSDP:
+
+@itemize
+
+@cindex RFC 2327
+@item @cite{SDP: Session Description Protocol (RFC 2327)}.
+
+@cindex RFC 3556
+@cindex bandwdith modifier
+@cindex RS bandwdidth modifier
+@cindex RR bandwidth modifier
+@item @cite{Session Description Protocol Bandwidth Modifiers for RTP Control Protocol Bandwidth (RFC 3556)}. RS and RR bandwidth modifiers to specify RTCP bandwith reserved for senders and receivers, respectively. 
+
+@cindex draft-ietf-mmusic-sdp-new
+@item @cite{SDP: Session Description Protocol (draft-ietf-mmusic-sdp-new)}.
+
+@cindex RFC 3605
+@cindex rtcp attribute
+@item @cite{RTCP Atribute in SDP (RFC 3606)}, definition of the `rtcp' attribute.
+
+@cindex RFC 3108
+@cindex ATM
+@item @cite{Conventions for the use of the Session Description Protocol (SDP) for ATM Bearer Connections (RFC 3108)}.
+
+@cindex RFC 3266
+@cindex IPv6
+@item @cite{Support for IPv6 in SDP (RFC 3266)}
+
+@cindex RFC 3267
+@cindex maxptime
+@item @cite{RTP payload format and file storage format for the Adaptive Multi-Rate(AMR) and Adaptive Multi-Rate Wideband (AMR-WB) audio codecs (RFC 3267)}
+
+@cindex RFC 3307
+@cindex capability declaration
+@item @cite{SDP Simple Capability Declaration (RFC 3307)}
+
+@cindex RFC 3312
+@cindex desired-status
+@cindex current-status
+@cindex conf-status
+@item @cite{Integration of Resource Management and SIP (RFC 3312)}
+
+@cindex RFC 3388
+@item @cite{Grouping of media lines in SDP (RFC 3388)}
+
+@cindex RFC 3435
+@cindex Capability Declaration
+@cindex Simple Capability Declaration
+@cindex sqn
+@cindex cdsc
+@cindex cpar
+@cindex cparmin
+@cindex cparmax
+@item @cite{SDP Simple Capability Declaration (RFC 3435)}
+
+@cindex ITU-T
+@cindex ITU-T Rec. T.38 Annex D
+@item @cite{ITU-T Rec. T.38 Annex D}
+
+@cindex lang
+@cindex sdplang
+@item @cite{RFC 3066} and @cite{RFC 3282}. Language list specification relevant for 'lang' and 'sdplang' attribrutes.
+
+@end itemize
+
+
+@c -----------------------------------------------------------------------
+@node Using FreeSDP
+@comment  node-name,  next,  previous,  up
+@chapter Using FreeSDP
+@cindex Using FreeSDP
+
+The FreeSDP programming interface is made up of functions that
+manipulate multimedia session description objects. The interface is
+designed so that parsing and formatting of descriptions can be
+performed independently. In fact, applications can only use whether
+the parsing functionalities or the formatting functionalities.
+
+@cindex parser.h
+@cindex freesdpp
+@cindex libfreesdpp
+If your application only needs to parse @acronym{SDP} descriptions (it
+does not build them), you can just do @code{#include
+<freesdp/parser.h>} and link your application with the library
+@code{freesdpp}.
+
+@cindex formatter.h
+@cindex freesdpf
+@cindex libfreesdpf
+On the contrary, if you are going to use the formatting module only,
+you can just do @code{#include <freesdp/formatter.h>} and link with
+the library @code{freesdpf}.
+
+If you are interested in both modules, you can just do @code{include
+<freesdp/freesdp.h>} and link with the library @code{freesdp}, which
+includes both the parsing and the formatting modules.
+
+@example
+  --------------         ---------------
+  |  parser.h  |         | formatter.h |
+  --------------         ---------------
+        ^                       ^
+        |-----------------------|
+                    |
+                 -----------
+                 |freesdp.h|
+                 -----------
+@end example
+
+@cindex C
+@cindex C++
+@cindex Name mangling
+FreeSDP is a C library but it is ready to be directly used in C++
+programs (name mangling is switched off for the symbols exported from
+FreeSDP).
+
+@cindex SDP parsing example
+@cindex SDP parsing demo
+@cindex SDP formatting example
+@cindex SDP formatting demo
+The source distribution of FreeSDP includes, under the demo directory,
+two files called parsedemo.c and formatdemo, which illustrate the use
+of the parsing and formattin modules, respectively.
+
+@cindex session description type
+@cindex announcement type
+@tindex fsdp_description_t
+The type used in FreeSDP to represent @acronym{SDP} descriptions is
+fsdp_description_t.
+
+@cindex media description type
+@cindex media type
+@tindex fsdp_media_announcement_t
+The type that represents in @acronym{SDP} media announcements.
+
+@cindex error type
+@tindex fsdp_error_t
+The @code{fsdp_error_t} type. Error codes.
+
+@cindex network and transport protocols related types
+Network and transport protocols related types:
+@tindex fsdp_network_type_t
+@code{fsdp_network_type_t}
+
+@tindex fsdp_address_type_t
+@code{fsdp_address_type_t}
+
+@tindex fsdp_transport_protocol_t
+@code{fsdp_transport_protocol_t}
+
+@cindex time related types
+Time related types.
+@tindex fsdp_repeat_t
+@code{fsdp_repeat_t}
+
+@tindex fsdp_time_period_t
+@code{fsdp_time_period_t}
+
+@tindex fsdp_media_t
+@code{fsdp_media_t}. Media (audio, video, etc.)
+
+@cindex attributes types
+Miscellaneuous attributes types
+
+@tindex fsdp_bw_modifier_type_t
+@code{fsdp_bw_modifier_type_t}
+
+@tindex fsdp_encryption_method_t
+@code{fsdp_encryption_method_t}
+
+@tindex fsdp_sendrecv_mode_t
+@code{fsdp_sendrecv_mode_t}
+
+@tindex fsdp_orient_t
+@code{fsdp_orient_t}
+
+@tindex fsdp_session_type_t
+@code{fsdp_sessio_type_t}
+
+@tindex fsdp_session_str_att_t
+@code{fsdp_session_str_att_t}
+
+@tindex fsdp_media_str_att_t
+@code{fsdp_media_str_att_t}
+
+An @acronym{SDP} session description consists of a session-level
+section and zero or more media-level sections.
+
+Each @acronym{SDP} multimedia session description includes:
+@itemize @minus
+@item Session name and purpose.
+@item List of time periods the session is active.
+@item Contact information for the responsible for the session (session owner).
+@item Media used in the session.
+@item Network, transport and application level parameters for the session: network addresses, transport ports, media formats, etc.
+@item Information about the session bandwidth.
+@end itemize
+
+
+@c -----------------------------------------------------------------------
+@node Parsing
+@comment  node-name,  next,  previous,  up
+@chapter Parsing
+@cindex Parsing
+@cindex Parsing descriptions
+@cindex Parsing FreeSDP
+
+@cindex freesdp/parser.h
+
+The following code parses an SDP description:
+
+@example
+@cartouche
+#include <freesdp/parser.h>
+
+int
+main ( char argc, char *argv[] )
+@{
+        fsdp_description_t dsc;
+        
+        fsdp_parse(...);
+@}
+@end cartouche
+@end example
+
+
+@emph{TODO}: Error codes:
+
+@cindex FSDPE_VERSION_MISSING
+@cindex FSDPE_OWNER_MISSING
+
+there are several error codes in the form of
+@code{FSDPE_XXXX_MISSING}, such as @code{FSDPE_VERSION_MISSING} and
+@code{FSDPE_OWNER_MISSING}. These indicate that a determined line is
+does not appear where, accroding to the @acronym{SDP} specification,
+it must be. For instance, if an @acronym{SDP} description lacks the
+first @samp{v=0} line, @code{FSDPE_VERSION_MISSING} will be returned
+by fsdp_parse. (Note that the @samp{v=0} line could be afterwards, but
+it would be illegal according to the @acronym{SDP} syntax.)
+
+@cindex FSDPE_NAME_EMPTY
+A special case of @code{INVALID} error is @code{FSDPE_NAME_EMPTY}.
+
+
+@c -----------------------------------------------------------------------
+@node Formatting
+@comment  node-name,  next,  previous,  up
+@chapter Formatting
+@cindex Formatting
+@cindex Formatting descriptions
+@cindex Formatting FreeSDP
+@cindex Printing
+@cindex Printing descriptions
+@cindex Printing FreeSDP
+
+Once a media announcement object is incorporated into a session
+announcement object, see the fsdp_add_media function, the media object
+must not be destroyed as long as the session object exists. Media
+objects can be incorporated into more than one session at the same
+time.
+
+@cindex freesdp/formatter.h
+@defun fsdp_make_description *dsc sdp_version *session_name *session_id *announcement_version *owner_username *owner_nt *owner_at *owner_address start stop
+@code{fsdp_make_description} builds an object with the minimun required
+information. The resulting object is ready to format an @acronym{SDP}
+description throuth a call to @code{fsdp_format}.
+@end defun
+
+@defun fsdp_format *dsc **text_description
+@code{fsdp_format} formats the description in dsc into description
+@end defun
+
+@defun fsdp_format_bounded *dsc **text_description maxsize
+@code{fsdp_format_bounded} is a lower level routine. It limits the
+size of the resulting text to @var{maxsize}.
+@end defun
+
+@defun fsdp_make_media **mdsc type *port tp *formats
+Allocates a new media announcements @code{fsdp_media_announcement_t} 
+@end defun
+
+@defun fsdp_add_media *dsc *mdsc
+Incorporate a media announcement into a session announcement. 
+@end defun
+
+@c -----------------------------------------------------------------------
+@node FreeSDP Internals
+@comment  node-name,  next,  previous,  up
+@chapter FreeSDP Internals
+@cindex FreeSDP Internals
+
+@cindex UTF-8
+@cindex ISO-10646
+TODO: characters set ISO-10646 in UTF-8 encoding. (Something should be
+said about this on the introductio).
+
+@emph{TODO:} Short paragraph on sources arrangement.
+
+@emph{TODO:} - Private headers: @file{priv.h} --global private header,
+@file{parserpriv.h} --private header for the parser module,
+@file{formatterpriv.h} --private header for the formatter module.
+
+There are a few simple design principles that can be seen taking a
+look at the code. These principles have been applied since FreeSDP
+aims to be a base library for systems in which the @acronym{SDP}
+protocol is used:
+
+@itemize @bullet
+@item Minimality. FreeSDP is designed to be a small library with a
+compact set of entry points.
+
+@item Security. Security issues such us buffer overflows or malicious
+syntax errors are checked for in an uniform manner thoughout the
+library.
+
+@item Speed. Without sacrificing security, and being an small library,
+FreeSDP routines and data structures are designed to be fast and allow
+for optimizations without precluding multi-threaded programming.
+
+@findex fsdp_description_clone
+@item For the sake of minimality, fsdp_description_clone, ...  are not
+defined. If they become necessary at any time, I will add them
+inmediately. For now, they do not seem to be very useful.
+
+@end itemize
+
+Speed: if calls to fsdp_parse_c, fsdp_parse_o, fsdp_parse_k were coded
+inline in fsdp_parse, this function would take more than 500 lines,
+with code duplicated exactly the same for session-level lines and
+media-level lines. Since the same rules apply (with few exceptions) to
+both session-level and media-level lines...
+
+Where there is no risk of code duplication, inlining code in
+@code{fsdp_parse} has been preferred, as can be seen in the case of o=
+lines, at the beginning of @code{fsdp_parse}.
+
+Where functionality is not the same for session-level as for
+media-level, as is the case with attributes (there are specific
+session-level attributes and specific media-level attributes)...
+
+@cindex Reference manual
+Source distribution @code{src/} directory
+@code{parser.c}
+
+FreeSDP is documented with Doxygen. (special comments)
+
+@defun fsdp_parse (fasd fdf *f, fdf pp)
+
+First, session-level description lines are parsed. Then, media-level
+description lines are parsed.
+
+@end defun
+
+network types are treated as strings
+URIs: 
+times (@acronym{SDP} sessions may be permanent, bounded or unbounded)
+encryption keys
+
+TODO: Parsing SDP multimedia session descriptions
+
+TODO: Time intervals
+
+@cindex ABNF
+@cindex syntax
+@cindex ABNF syntax
+@cindex SDP syntax
+@cindex RFC
+The @acronym{ABNF} syntax is given in @acronym{RFC} 2327
+
+@defmac NEXT_LINE c
+advance char pointer @code{c} up to the first character after the
+first new line.
+@end defmac
+
+Adding new attributes: first, check if it is session-level,
+media-level or both.
+
+TODO: Thread-safety
+
+
+@c -----------------------------------------------------------------------
+@node Other Related Works
+@comment  node-name,  next,  previous,  up
+@chapter Other Related Works
+@cindex Other related works
+
+@itemize
+@cindex GNU oSIP
+
+@cindex SIP
+@item GNU oSIP. is a C library for the SIP protocol that implements SIP messages parsing as well as the four finite state machines. See @url{http://www.gnu.org/software/osip} for more information.
+
+@item NIST SIP, which is a Java library that implements @acronym{SIP} and @acronym{SDP}.
+
+@end itemize
+
+
+@c -----------------------------------------------------------------------
+@node Future Work
+@comment  node-name,  next,  previous,  up
+@chapter Future Work
+@cindex Future, Future Work
+
+Obviously, the evolution of FreeSDP is tightly tied to the evolution
+of the @acronym{SDP} protocol. The FreeSDP core is not expected to
+change or grow a lot. Since the design of FreeSDP takes into account
+all the global features and requirements of @acronym{SDP}, only minor
+additions (such as new attributes or new bandwidth modifiers) should
+be necessary to bring up to date FreeSDP as new standards or standard
+revisions arise.
+
+On the other hand, the features already present in version 0 of
+@acronym{SDP} are not likely to disappear or change deeply, as it can
+be seen comparing the first official specification of SDP @cite{RFC
+2327} with the newest, as of this writing,
+@cite{draft-ietf-mmusic-sdp-new}.
+
+This leaves us two fields in which to work to improve
+@acronym{FreeSDP}:
+
+@itemize
+@item 
+Add new description fields and/or field values defined in new standards,
+@item 
+Improve @acronym{FreeSDP} in terms of robustness, efficiency and
+security.
+@end itemize
+
+@c %** end of body
+
+@c -----------------------------------------------------------------------
+@node Licenses
+@appendix Licenses
+
+@menu
+* GNU Free Documentation License::            License for this document.
+* GNU General Public License::                License for the FreeSDP library.
+@end menu
+
+@include fdl.texi
+
+@include gpl.texi
+
+
+@c -----------------------------------------------------------------------
+
+@c %** start of end
+@node Data Type Index
+@unnumbered Data Type Index
+
+@printindex tp
+
+@node Function Index
+@unnumbered Function Index
+
+@printindex fn
+
+@node Concept Index
+@unnumbered Concept Index
+
+@printindex cp
+
+@bye
+@c %** end of end

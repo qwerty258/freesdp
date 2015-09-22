@@ -1,0 +1,60 @@
+* support for draft-ietf-mmusic-sdp-comedia (TCP, symmetric RTP, etc)
+
+* good test suite. Check draft-ietf-mmusic-sdp-implem.
+
+* sync with sdp-parameters at IANA
+
+* add att-field at unknown level from RFC3108
+
+* simcap -RFC 3307: attributes sqn, cdsc, cpar, cparmin, cparmax
+
+* RFC 3388: attributes mid and group.
+
+* periods and repeat times
+
+support for multiple character sets:
+* >= 0 && <= 9        -----> <ctype.h>isdigit
+
+* RFC 3264: Offer/answer model
+
+* test: after each call to fsdp_parse_x, a check for the error code
+must be done
+
+* base64 encryption parameters
+
+* Add: interface to unknown attributes
+
+* What happens if some attribute is specified twice.
+
+* somehow, when not returning FSDPE_OK return pointer to the string
+that caused the error.
+
+* find a good MAXDEFAULTFIELDLEN
+
+* be pedantic about POS-DIGIT?
+
+* 64-bit NTP timestamps, session ids, etc. (long long)
+
+* string reallocation:  (from GNU sed)
+/* increase a struct line's length, making some attempt at
+   keeping realloc() calls under control by padding for future growth.  */
+static void
+resize_line(lb, len)
+  struct line *lb;
+  size_t len;
+{
+  lb->alloc *= 2;
+  if (lb->alloc - lb->length < len)
+    lb->alloc = lb->length + len;
+  lb->text = REALLOC(lb->text, lb->alloc, char);
+}
+
+* NEXT_LINE MUST not eat nothing but line endings
+
+* Calls for strtol: use the endptr parameter to check for
+errors. (maybe a char *error_pointer)
+
+* lower level check for? 
+	- phone numbers
+	- URIs
+	- e-mails
