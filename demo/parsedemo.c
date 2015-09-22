@@ -2,12 +2,12 @@
   parsedemo - An example on how to use FreeSDP to parse SDP descriptions.
   Copyright (C) 2001,2002  Federico Montesino Pouzols <fedemp@altern.org>
   
-  This program is free software; you can redistribute it and/or modify
+  parsedemo is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
   (at your option) any later version.
   
-  This program is distributed in the hope that it will be useful,
+  parsedemo is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
@@ -57,6 +57,13 @@ do_parse(const char *text, size_t len)
     printf(" the media announcement number %d has %d rtpmap attributes\n",
 	   i + 1,
 	   fsdp_get_media_rtpmap_count(fsdp_get_media(dsc,i)));
+
+  printf(" the description has %d unknown session level attributes:\n",
+	 fsdp_get_unidentified_attributes_count(dsc));
+
+  for (i = 0; i < fsdp_get_unidentified_attribute_count(dsc); i++ ) {
+    printf("   #%d: %s\n",i+1,fsdp_get_unidentified_attribute(dsc,i));
+  }
 
   /* Free the new fsdp_description_t object previously allocated */
   fsdp_description_delete(dsc);

@@ -2,7 +2,7 @@ dnl Process this file with autoconf to produce a configure script
 dnl (Developed for autoconf 2.53)
 AC_INIT([freesdp],[0.5.0b1],freesdp-devel@nongnu.org)
 PACKAGE=freesdp
-VERSION="0.5.0b1"
+VERSION="0.5.0b2"
 LT_RELEASE="0.5.0"
 LT_VERSION="0:0:0"
 AC_PREREQ([2.53])
@@ -49,7 +49,7 @@ AC_SUBST(LT_VERSION)
 AC_SUBST(LT_RELEASE)
 
 AC_CONFIG_FILES([Makefile config/Makefile m4/Makefile src/Makefile
-			  doc/Makefile demo/Makefile
+			  doc/Makefile demo/Makefile tests/Makefile
 			  freesdp.lsm.make freesdp.spec])
 dnl tests/Makefile
 AC_OUTPUT

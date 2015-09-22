@@ -5,6 +5,7 @@ i=This is a very short description.
 e=foo@bar.example.com
 c=IN IP4 224.2.0.1/127
 t=3149328700 3159328700
+a=X-ConferenceModel: foo 01234567890987654321098765432109876543210
 m=audio 3456 RTP/AVP 0 5
 a=rtpmap:0 PCMU/8000
 a=rtpmap:5 DVI4/8000

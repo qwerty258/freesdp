@@ -1,13 +1,13 @@
 /*
   This file is part of FreeSDP
-  Copyright (C) 2001,2002,2003 Federico Montesino Pouzols <fedemp@altern.org>
+  Copyright (C) 2001,2002,2003,2004 Federico Montesino Pouzols <fedemp@altern.org>
 
   FreeSDP is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
   (at your option) any later version.
 
-  This program is distributed in the hope that it will be useful,
+  FreeSDP is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
@@ -259,9 +259,9 @@ struct fsdp_description_t_s
   unsigned int unidentified_attributes_count;
 };
 
-#define MEDIA_RTPMAPS_MAX_COUNT 5
-#define SDPLANGS_MAX_COUNT 5
-#define UNIDENTIFIED_ATTRIBUTES_MAX_COUNT 5
+#define MEDIA_RTPMAPS_MAX_COUNT 10
+#define SDPLANGS_MAX_COUNT 10
+#define UNIDENTIFIED_ATTRIBUTES_MAX_COUNT 10
 
 END_C_DECLS
 

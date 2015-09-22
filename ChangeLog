@@ -1,3 +1,50 @@
+2006-05-03 Federico Montesino Pouzols <fedemp@altern.org>
+
+	* tests/Makefile.am: fixed src names.
+
+	* demo/parsedemo.c: updated for new API names.
+
+2005-03-01 Federico Montesino Pouzols <fedemp@altern.org>
+
+	* configure.ac, TODO: updated for release 0.5.0b2.
+
+	* reconfig: updated for newer aclocal and automake
+	
+	* src/parser.c: fixed index checking bug in
+	fsdp_get_unidentified_attribute.
+	
+	* src/freesdp/parser.h, src/parser.c: added
+	fsdp_get_period_repeat_offset_count. fsdp_get_period_repeat_offsets
+	fixed.
+
+	* src/freesdp/parser.h, src/parser.c: modified the names of some
+	..._count methods so that all of them use a plural form
+	(...formats_count, ...attributes_count, etc).
+
+	* src/parser.c: implemented fsdp_get_periods_count
+	
+	* src/parser.c: fsdp_parse_b: avoid 20 char limit for bw specifier.
+
+	* fixed GPL notice in .c and .h files.
+
+2004-01-24  Federico Montesino Pouzols <fedemp@altern.org>
+
+	* configure.ac, TODO: updated for release 0.5.0b1.
+
+	* src/freesdp/common.h, src/parser.c, src/formatter.c: added
+	support for RTP/SAVP profile according to draft-ietf-avt-srtp-09,
+	for RTP/AVPF profile according to draft-ietf-avt-rtcp-feedback-07,
+	and for RTP/SAVPF profile according to
+	draft-ietf-avt-profile-savpf-00.
+
+	* src/freesdp/parser.h, src/parser.c: added fsdp_get_wrong_string.
+	
+	* configure.ac, Makefila.am, tests/Makefile.am, tests/README,
+	tests/rfc2sdps, tests/torture.c: added basic infrastructure for
+	the test suite and tools.
+	
+	* doc/freesdp.texi: updates, new drafts.
+
 2004-01-08  Federico Montesino Pouzols <fedemp@altern.org>
 
 	* freesdp.spec.in: added build requirements (autotools).

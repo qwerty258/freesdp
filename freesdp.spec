@@ -1,6 +1,6 @@
 Summary: FreeSDP - A SDP descriptions parser and formatter library
 Name: freesdp
-Version: 0.5.0b1
+Version: 0.5.0b2
 Release: 1
 Copyright: GPL
 Group: Development/Libraries

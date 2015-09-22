@@ -15,7 +15,7 @@ EXTRA_DIST = reconfig TODO  \
 @SET_MAKE@
 
 SUBDIRS = src doc demo 
-DIST_SUBDIRS = config demo doc m4 src
+DIST_SUBDIRS = config demo doc m4 src tests
 
 # Build freesdp.lsm from freesdp.lsm.make
 lsm:   	@PACKAGE@-@VERSION@.tar.gz @PACKAGE@-@VERSION@.tar.bz2

@@ -1,13 +1,13 @@
 /*
   This file is part of FreeSDP
-  Copyright (C) 2001,2002,2003 Federico Montesino Pouzols <fedemp@altern.org>
+  Copyright (C) 2001,2002,2003,2004 Federico Montesino Pouzols <fedemp@altern.org>
 
   FreeSDP is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
   (at your option) any later version.
 
-  This program is distributed in the hope that it will be useful,
+  FreeSDP is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
@@ -55,6 +55,19 @@ BEGIN_C_DECLS
  **/
 fsdp_error_t
 fsdp_parse(const char *description, fsdp_description_t *dsc);
+
+/**
+ * Get the the text that caused the first error when parsing this
+ * description.
+ *
+ * @param dsc SDP description object.
+ *
+ * @return NULL if fsdp_parse returned FSDPE_OK for this
+ * description. Otherwise, a pointer as close as possible to the
+ * beginning of the text line or string that caused the parse error.
+ **/
+const char *
+fsdp_get_wrong_string(const fsdp_description_t *dsc);
   
 /**
  * Get the SDP protocol version of the description.
@@ -180,7 +193,7 @@ fsdp_get_email(const fsdp_description_t *dsc, unsigned int index);
  * <code>dsc</code>.
  *
  * @param dsc SDP description object.
- * @return number of emails.
+ * @return number of phones.
  **/
 unsigned int
 fsdp_get_phones_count(const fsdp_description_t *dsc);
@@ -235,7 +248,7 @@ unsigned int
 fsdp_get_global_conn_address_ttl(const fsdp_description_t *dsc);
 
 unsigned int
-fsdp_get_global_conn_address_count(const fsdp_description_t *dsc);
+fsdp_get_global_conn_addresses_count(const fsdp_description_t *dsc);
 
 /**
  * Get the number of bandwidth modifiers specified for this session.
@@ -244,7 +257,7 @@ fsdp_get_global_conn_address_count(const fsdp_description_t *dsc);
  * @return number of bandwidth modifiers.
  **/
 unsigned int
-fsdp_get_bw_modifier_count(const fsdp_description_t *dsc);
+fsdp_get_bw_modifiers_count(const fsdp_description_t *dsc);
 
 /**
  * Get the bandwidth modifier type for the session.
@@ -296,7 +309,7 @@ fsdp_get_bw_value(const fsdp_description_t *dsc, unsigned int index);
  * @return number of time periods
  **/
 unsigned long int
-fsdp_get_period_count(const fsdp_description_t *dsc);
+fsdp_get_periods_count(const fsdp_description_t *dsc);
 
 /**
  * Get the start time for the period selected by index.
@@ -366,19 +379,36 @@ fsdp_get_period_repeat_duration(const fsdp_description_t *dsc,
 			      unsigned int index, unsigned int rindex);
 
 /**
- * Get the offsets of the repeat selected by rindex for the period
- * selected by index.
+ * Get the number of offsets for the repeat selected by rindex and the
+ * period.selected by index.
+ *
+ * @param dsc SDP description object.
+ * @param index number of the period. Note that this index follows the
+ * traditional C convention: from 0 to fsdp_get_period_count() - 1.
+ * @param rindex number of the repeat.
+ * @return number of offsets
+ * @retval 0 if an invalid index is provided.
+ **/
+unsigned long int
+fsdp_get_period_repeat_offsets_count(const fsdp_description_t *dsc, 
+				     unsigned int index, unsigned int rindex);
+
+/**
+ * Get the offsets number oindex of the repeat selected by rindex for
+ * the period selected by index.
  *
  * @param dsc SDP description object.
  * @param index number of time period. Note that this index follows the
  * traditional C convention: from 0 to fsdp_get_period_count() - 1.
  * @param rindex number of repeat
- * @return array of offsets
- * @retval NULL if an invalid index is provided.
+ * @param oindex number of offset
+ * @return offset value
+ * @retval 0 if an invalid index is provided.
  **/
-const unsigned long int *
+unsigned long int
 fsdp_get_period_repeat_offsets(const fsdp_description_t *dsc, 
-			      unsigned int index, unsigned int rindex);
+			       unsigned int index, unsigned int rindex, 
+			       unsigned int oindex);
 
 /**
  * Get the encryption method defined for this session.
@@ -417,7 +447,7 @@ fsdp_get_timezone_adj(const fsdp_description_t *dsc);
  *
  **/
 unsigned int
-fsdp_get_unidentified_attribute_count(const fsdp_description_t *dsc);
+fsdp_get_unidentified_attributes_count(const fsdp_description_t *dsc);
 
 /**
  *
@@ -535,7 +565,7 @@ unsigned int
 fsdp_get_media_port(const fsdp_media_description_t *dsc);
 
 unsigned int
-fsdp_get_media_port_count(const fsdp_media_description_t *dsc);
+fsdp_get_media_ports_count(const fsdp_media_description_t *dsc);
 
 /**
  *
@@ -577,7 +607,7 @@ unsigned int
 fsdp_get_media_address_ttl(const fsdp_media_description_t *mdsc);
 
 unsigned int
-fsdp_get_media_address_count(const fsdp_media_description_t *mdsc);
+fsdp_get_media_addresses_count(const fsdp_media_description_t *mdsc);
 
 /**
  *
@@ -714,7 +744,7 @@ fsdp_get_media_rtcp_address(const fsdp_media_description_t *dsc);
  *
  **/
 unsigned int
-fsdp_get_media_unidentified_attribute_count(const fsdp_media_description_t 
+fsdp_get_media_unidentified_attributes_count(const fsdp_media_description_t 
 					    *mdsc);
 
 /**

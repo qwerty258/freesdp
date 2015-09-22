@@ -1,13 +1,13 @@
 /*
   This file is part of FreeSDP
-  Copyright (C) 2001,2002,2003 Federico Montesino Pouzols <fedemp@altern.org>
+  Copyright (C) 2001,2002,2003,2004 Federico Montesino Pouzols <fedemp@altern.org>
   
   FreeSDP is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
   (at your option) any later version.
 
-  This program is distributed in the hope that it will be useful,
+  FreeSDP is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
@@ -332,7 +332,7 @@ fsdp_parse(const char *text_description, fsdp_description_t *dsc)
   while ( !strncmp(p,"a=",2) ) {
     /* The "9" lenght specifier of the first string is subject to
        changes */
-    if ( sscanf(p,"a=%9[^:\r\n]:%"MSFLENS"[^\r\n]",fsdp_buf[0],fsdp_buf[1]) == 2 ) {  
+    if ( sscanf(p,"a=%[^:\r\n]:%"MSFLENS"[^\r\n]",fsdp_buf[0],fsdp_buf[1]) == 2 ) {  
       /* session-level value attributes */
       if ( !strncmp(fsdp_buf[0],"cat",3) )
 	dsc->a_str_attributes[FSDP_SESSION_STR_ATT_CATEGORY] = 
@@ -398,8 +398,8 @@ fsdp_parse(const char *text_description, fsdp_description_t *dsc)
 	  dsc->unidentified_attributes_count++;
 	}
       }
-      NEXT_LINE(p);  
-    } else if ( sscanf(p,"a=%20s",fsdp_buf[0]) == 1 ) {  
+      NEXT_LINE(p);
+    } else if ( sscanf(p,"a=%"MSFLENS"[^\r\n]",fsdp_buf[0]) == 1 ) {  
       /* session-level property attributes */
       if ( !strncmp(fsdp_buf[0],"recvonly",8) )
 	dsc->a_sendrecv_mode = FSDP_SENDRECV_RECVONLY;
@@ -495,6 +495,12 @@ fsdp_parse(const char *text_description, fsdp_description_t *dsc)
 	}
 	if ( !strncmp(fsdp_buf[2],"RTP/AVP",7) )
 	  media->transport = FSDP_TP_RTP_AVP;
+	else if ( !strncmp(fsdp_buf[2],"RTP/SAVP",8) )
+	  media->transport = FSDP_TP_RTP_SAVP;
+	else if ( !strncmp(fsdp_buf[2],"RTP/AVPF",8) )
+	  media->transport = FSDP_TP_RTP_AVPF;
+	else if ( !strncmp(fsdp_buf[2],"RTP/SAVPF",9) )
+	  media->transport = FSDP_TP_RTP_SAVPF;
 	else if ( !strncmp(fsdp_buf[2],"udp",3) )
 	  media->transport = FSDP_TP_UDP;
 	else if ( !strncmp(fsdp_buf[2],"TCP",3) )
@@ -568,7 +574,7 @@ fsdp_parse(const char *text_description, fsdp_description_t *dsc)
       /* a=<attribute>
 	 a=<attribute>:<value> */
       while ( !strncmp(p,"a=",2) ) {
-	if ( sscanf(p,"a=%9[^:\r\n]:%"MLFLENS"[^\r\n]",fsdp_buf[0],longfsdp_buf) 
+	if ( sscanf(p,"a=%[^:\r\n]:%"MLFLENS"[^\r\n]",fsdp_buf[0],longfsdp_buf) 
 	     == 2 ) {  
 	  /* media-level value attributes */
 	  if ( !strncmp(fsdp_buf[0],"ptime",5) )
@@ -659,7 +665,7 @@ fsdp_parse(const char *text_description, fsdp_description_t *dsc)
 	    }
 	  }
 	  NEXT_LINE(p);
-	} else if ( sscanf(p,"a=%8s",fsdp_buf[0]) == 1 ) {  
+	} else if ( sscanf(p,"a=%"MSFLENS"[^\r\n]",fsdp_buf[0]) == 1 ) {  
 	  /* media-level property attributes */
 	  if ( !strncmp(fsdp_buf[0],"recvonly",8) )
 	    media->a_sendrecv_mode = FSDP_SENDRECV_RECVONLY;
@@ -779,7 +785,7 @@ fsdp_parse_b(const char **p, fsdp_bw_modifier_t **bw_modifiers,
 
   while ( i > 0 ) {
     unsigned int index = *bw_modifiers_count - i;
-    if ( 2 == sscanf(*p,"b=%20[^:\r\n]:%lu",fsdp_buf,&wuint) ) {
+    if ( 2 == sscanf(*p,"b=%"MSFLENS"[^:\r\n]:%lu",fsdp_buf,&wuint) ) {
       if ( !strncmp(fsdp_buf,"CT",2) )
 	(*bw_modifiers)[index].b_mod_type = FSDP_BW_MOD_TYPE_CONFERENCE_TOTAL;
       else if ( !strncmp(fsdp_buf,"AS",2) )
@@ -912,6 +918,14 @@ fsdp_repeat_time_to_uint(const char *time, unsigned long int *seconds)
     return FSDPE_INVALID_REPEAT;
   }    
   return FSDPE_OK;
+}
+
+const char *
+fsdp_get_wrong_string(const fsdp_description_t *dsc)
+{
+  if ( NULL == dsc ) 
+    return NULL;
+  return NULL;
 }
 
 unsigned int
@@ -1059,7 +1073,7 @@ fsdp_get_global_conn_address_ttl(const fsdp_description_t *dsc)
 }
 
 unsigned int
-fsdp_get_global_conn_address_count(const fsdp_description_t *dsc)
+fsdp_get_global_conn_addresses_count(const fsdp_description_t *dsc)
 {
   if ( NULL == dsc)
     return 0;
@@ -1067,7 +1081,7 @@ fsdp_get_global_conn_address_count(const fsdp_description_t *dsc)
 }
 
 unsigned int
-fsdp_get_bw_modifier_count(const fsdp_description_t *dsc)
+fsdp_get_bw_modifiers_count(const fsdp_description_t *dsc)
 {
   if ( (NULL == dsc) )
     return 0;
@@ -1098,6 +1112,14 @@ fsdp_get_bw_value(const fsdp_description_t *dsc, unsigned int index)
   if ( (NULL == dsc) || (index >= dsc->bw_modifiers_count) )
     return 0;
   return dsc->bw_modifiers[index].b_value;
+}
+
+unsigned long int
+fsdp_get_periods_count(const fsdp_description_t *dsc)
+{
+  if ( NULL == dsc)
+    return 0;
+  return dsc->time_periods_count;
 }
 
 time_t
@@ -1143,13 +1165,26 @@ fsdp_get_period_repeat_duration(const fsdp_description_t *dsc,
   return dsc->time_periods[index]->repeats[rindex]->duration;
 }
 
-const unsigned long int *
-fsdp_get_period_repeat_offsets(const fsdp_description_t *dsc, 
-			      unsigned int index, unsigned int rindex)
+unsigned long int
+fsdp_get_period_repeat_offsets_count(const fsdp_description_t *dsc, 
+				     unsigned int index, unsigned int rindex)
 {
-  if ( (NULL == dsc) || (index >= dsc->time_periods_count) )
-    return NULL;
-  return dsc->time_periods[index]->repeats[rindex]->offsets;
+  if ( (NULL == dsc) || (index >= dsc->time_periods_count)  || 
+       (rindex >= dsc->time_periods[index]->repeats_count) )
+    return 0;
+  return dsc->time_periods[index]->repeats[rindex]->offsets_count;
+}
+
+unsigned long int
+fsdp_get_period_repeat_offsets(const fsdp_description_t *dsc, 
+			       unsigned int index, unsigned int rindex,
+			       unsigned int oindex)
+{
+  if ( (NULL == dsc) || (index >= dsc->time_periods_count)  || 
+       (rindex >= dsc->time_periods[index]->repeats_count) || 
+       (oindex >= dsc->time_periods[index]->repeats[rindex]->offsets_count) )
+    return 0;
+  return dsc->time_periods[index]->repeats[rindex]->offsets[oindex];
 }
 
 const char *
@@ -1161,7 +1196,7 @@ fsdp_get_timezone_adj(const fsdp_description_t *dsc)
 }
 
 unsigned int
-fsdp_get_unidentified_attribute_count(const fsdp_description_t *dsc)
+fsdp_get_unidentified_attributes_count(const fsdp_description_t *dsc)
 {
   if ( NULL == dsc )
     return 0;
@@ -1172,7 +1207,7 @@ const char *
 fsdp_get_unidentified_attribute(const fsdp_description_t *dsc, 
 				unsigned int index)
 {
-  if ( NULL == dsc || (index < dsc->unidentified_attributes_count) )
+  if ( NULL == dsc || (index >= dsc->unidentified_attributes_count) )
     return NULL;
   return dsc->unidentified_attributes[index];
 }
@@ -1330,7 +1365,7 @@ fsdp_get_media_port(const fsdp_media_description_t *dsc)
 }
 
 unsigned int
-fsdp_get_media_port_count(const fsdp_media_description_t *dsc)
+fsdp_get_media_ports_count(const fsdp_media_description_t *dsc)
 {
   if ( (NULL == dsc) )
     return 0;
@@ -1402,7 +1437,7 @@ fsdp_get_media_address_ttl(const fsdp_media_description_t *mdsc)
 }
 
 unsigned int
-fsdp_get_media_address_count(const fsdp_media_description_t *mdsc)
+fsdp_get_media_addresses_count(const fsdp_media_description_t *mdsc)
 {
   if ( NULL == mdsc)
     return 0;
@@ -1628,7 +1663,7 @@ fsdp_get_media_rtcp_address(const fsdp_media_description_t *dsc)
 }
 
 unsigned int
-fsdp_get_media_unidentified_attribute_count(const fsdp_media_description_t
+fsdp_get_media_unidentified_attributes_count(const fsdp_media_description_t
 					    *mdsc)
 {
   if ( NULL == mdsc )

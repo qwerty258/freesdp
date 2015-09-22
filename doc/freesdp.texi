@@ -8,9 +8,9 @@
 @documentencoding ISO-8859-1
 @c %** end of header
 
-@set EDITION 0.4.0
-@set VERSION 0.4.0
-@set UPDATED January 2003
+@set EDITION 0.5.0
+@set VERSION 0.5.0
+@set UPDATED May 2006
 
 @dircategory Development
 @direntry
@@ -25,8 +25,9 @@
 functions to parse and format @acronym{SDP} multimedia session
 descriptions (see @acronym{RFC} 2327 and draft-ietf-mmusic-sdp-new).
 
-Copyright @copyright{} 2001, 2002, 2003 Federico Montesino Pouzols
+Copyright @copyright{} 2001, 2002, 2003, 2004, 2005, 2006 Federico Montesino Pouzols
 @email{fedemp@@altern.org}.
+
 @include fdlnotice.texi
 @end ifnottex
 @c %** end of summary description and copyright
@@ -273,21 +274,29 @@ Protocol (SDP) Parameters} list at IANA
 
 What follows is a list of SDP related RFCs, Internet Drafts and other
 documents, with notes on the conformance degree currently provided by
-FreeSDP:
+FreeSDP. 
+
+Core SDP specification:
 
 @itemize
 
 @cindex RFC 2327
 @item @cite{SDP: Session Description Protocol (RFC 2327)}.
 
+@cindex draft-ietf-mmusic-sdp-new
+@item @cite{SDP: Session Description Protocol (draft-ietf-mmusic-sdp-new)}.
+
+@end itemize
+
+Extensions to SDP:
+
+@itemize
+
 @cindex RFC 3556
 @cindex bandwdith modifier
 @cindex RS bandwdidth modifier
 @cindex RR bandwidth modifier
 @item @cite{Session Description Protocol Bandwidth Modifiers for RTP Control Protocol Bandwidth (RFC 3556)}. RS and RR bandwidth modifiers to specify RTCP bandwith reserved for senders and receivers, respectively. 
-
-@cindex draft-ietf-mmusic-sdp-new
-@item @cite{SDP: Session Description Protocol (draft-ietf-mmusic-sdp-new)}.
 
 @cindex RFC 3605
 @cindex rtcp attribute
@@ -335,6 +344,18 @@ FreeSDP:
 @cindex lang
 @cindex sdplang
 @item @cite{RFC 3066} and @cite{RFC 3282}. Language list specification relevant for 'lang' and 'sdplang' attribrutes.
+
+@cindex SRTP
+@cindex Secure RTP
+@cindex SAVP
+@item @cite{draft-ietf-avt-srtp}. RTP/SAVP Secure RTP profile for audio and video transport.
+
+@cindex RTCP-based feedback
+@cindex AVPF
+@item @cite{draft-ietf-avt-rtcp-feedback}. RTP/AVPF extended RTP profile for RTCP-based feedback.
+
+@cindex SAVPF
+@item @cite{draft-ietf-avt-profile-savpf}. RTP/SAVPF extended secure RTP profile for RTCP-based feedback.
 
 @end itemize
 
@@ -394,8 +415,26 @@ FreeSDP).
 @cindex SDP formatting example
 @cindex SDP formatting demo
 The source distribution of FreeSDP includes, under the demo directory,
-two files called parsedemo.c and formatdemo, which illustrate the use
-of the parsing and formattin modules, respectively.
+two files called parsedemo.c and formatdemo.c, which illustrate the
+use of the parsing and formattin modules, respectively.
+
+In order to introduce the most commonly used types defined in FreeSDP,
+a short overview of SDP descriptions follows. An @acronym{SDP} session
+description consists of a session-level section and zero or more
+media-level sections.
+
+Each @acronym{SDP} multimedia session description includes:
+@itemize @minus
+@item Session name and purpose.
+@item List of time periods the session is active.
+@item Contact information for the responsible for the session (session owner).
+@item Media used in the session.
+@item Network, transport and application level parameters for the session: network addresses, transport ports, media formats, etc.
+@item Information about the session bandwidth.
+@end itemize
+
+FreeSDP defines specific types for SDP descriptions and its
+components:
 
 @cindex session description type
 @cindex announcement type
@@ -458,19 +497,6 @@ Miscellaneuous attributes types
 @tindex fsdp_media_str_att_t
 @code{fsdp_media_str_att_t}
 
-An @acronym{SDP} session description consists of a session-level
-section and zero or more media-level sections.
-
-Each @acronym{SDP} multimedia session description includes:
-@itemize @minus
-@item Session name and purpose.
-@item List of time periods the session is active.
-@item Contact information for the responsible for the session (session owner).
-@item Media used in the session.
-@item Network, transport and application level parameters for the session: network addresses, transport ports, media formats, etc.
-@item Information about the session bandwidth.
-@end itemize
-
 
 @c -----------------------------------------------------------------------
 @node Parsing
@@ -503,6 +529,10 @@ main ( char argc, char *argv[] )
 
 @cindex FSDPE_VERSION_MISSING
 @cindex FSDPE_OWNER_MISSING
+
+@findex fsdp_get_wrong_string
+In addition to the error code, the text that caused the error can be
+retrieved using fsdp_get_wrong_string.
 
 there are several error codes in the form of
 @code{FSDPE_XXXX_MISSING}, such as @code{FSDPE_VERSION_MISSING} and

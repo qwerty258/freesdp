@@ -8,8 +8,8 @@
 
 # This is system dependent.
 libtoolize --copy --force
-aclocal-1.6 -I m4
+aclocal -I m4
 autoheader
-automake-1.6 --add-missing --copy
+automake --add-missing --copy
 autoconf
 rm -rf config.cache

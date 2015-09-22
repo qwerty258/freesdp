@@ -1,0 +1,10 @@
+
+	This directory holds the currently under development test
+suite for FreeSDP.
+
+	* torture - the main test performer
+
+	* rfc2sdps - a Perl script that builds a file with SDP
+descriptions extracted from RFCs and Internet drafts such as
+draft-ietf-mmusic-offer-answer-examples, RFC 3665 and RFC 3666. These
+files are used as input to 'torture'.

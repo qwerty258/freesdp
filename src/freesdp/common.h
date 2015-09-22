@@ -1,13 +1,13 @@
 /*
   This file is part of FreeSDP.
-  Copyright (C) 2001,2002,2003 Federico Montesino Pouzols <fedemp@altern.org>
+  Copyright (C) 2001,2002,2003,2004 Federico Montesino Pouzols <fedemp@altern.org>
 
   FreeSDP is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
   (at your option) any later version.
 
-  This program is distributed in the hope that it will be useful,
+  FreeSDP is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
@@ -274,6 +274,13 @@ typedef enum {
 typedef enum {
   FSDP_TP_UNDEFINED,              /**< Not specified */
   FSDP_TP_RTP_AVP,                /**< RTP Audio/Video Profile */
+  FSDP_TP_RTP_SAVP,               /**< Secure RTP (RTP/SAVP profile) */
+  FSDP_TP_RTP_AVPF,               /**< Extended RTP profile for
+				     RTCP-based feedback (RTP/AVPF
+				     profile) */
+  FSDP_TP_RTP_SAVPF,               /**< Extended secure RTP profile
+				      for RTCP-based feedback
+				      (RTP/SAVPF profile) */
   FSDP_TP_UDP,                    /**< UDP */
   FSDP_TP_TCP,                    /**< TCP */
   FSDP_TP_UDPTL,                  /**< ITU-T T.38*/

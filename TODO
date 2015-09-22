@@ -1,40 +1,49 @@
-* support for draft-ietf-mmusic-sdp-comedia (TCP, symmetric RTP, etc)
-
 * good test suite. Check draft-ietf-mmusic-sdp-implem.
 
-* sync with sdp-parameters at IANA
+* somehow, when not returning FSDPE_OK, provide a pointer to the
+section of the description that caused the error (nearest to the error
+as possible). For instance, calls for strtol: use the endptr parameter
+to check for errors. (maybe a char *error_pointer)
 
-* add att-field at unknown level from RFC3108
-
-* simcap -RFC 3307: attributes sqn, cdsc, cpar, cparmin, cparmax
-
-* RFC 3388: attributes mid and group.
-
-* periods and repeat times
-
-support for multiple character sets:
-* >= 0 && <= 9        -----> <ctype.h>isdigit
-
-* RFC 3264: Offer/answer model
-
-* test: after each call to fsdp_parse_x, a check for the error code
-must be done
+* review/finish periods and repeat times
 
 * base64 encryption parameters
 
 * Add: interface to unknown attributes
 
-* What happens if some attribute is specified twice.
-
-* somehow, when not returning FSDPE_OK return pointer to the string
-that caused the error.
-
 * find a good MAXDEFAULTFIELDLEN
+
+* RFC 3264: Offer/answer model -> negotiation module
+
+* Adopt a consistent and documented behaviour when some attribute is
+specified twice (both for parsing and formatting).
+
+Miscellaneous:
+
+* NEXT_LINE MUST not eat nothing but line endings
 
 * be pedantic about POS-DIGIT?
 
 * 64-bit NTP timestamps, session ids, etc. (long long)
 
+* sync with sdp-parameters at IANA
+
+* lower level check for? 
+	- phone numbers
+	- URIs
+	- e-mails
+
+Extensions:
+
+* support for draft-ietf-mmusic-sdp-comedia (TCP, symmetric RTP, etc)
+
+* RFC 3388: attributes mid and group.
+
+* add att-field at unknown level from RFC3108
+
+* simcap -RFC 3307: attributes sqn, cdsc, cpar, cparmin, cparmax
+
+-----------
 * string reallocation:  (from GNU sed)
 /* increase a struct line's length, making some attempt at
    keeping realloc() calls under control by padding for future growth.  */
@@ -48,13 +57,3 @@ resize_line(lb, len)
     lb->alloc = lb->length + len;
   lb->text = REALLOC(lb->text, lb->alloc, char);
 }
-
-* NEXT_LINE MUST not eat nothing but line endings
-
-* Calls for strtol: use the endptr parameter to check for
-errors. (maybe a char *error_pointer)
-
-* lower level check for? 
-	- phone numbers
-	- URIs
-	- e-mails

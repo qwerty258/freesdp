@@ -1,4 +1,4 @@
-This is freesdp.info, produced by makeinfo version 4.6 from
+This is freesdp.info, produced by makeinfo version 4.8 from
 freesdp.texi.
 
 INFO-DIR-SECTION Development
@@ -10,8 +10,8 @@ END-INFO-DIR-ENTRY
 parse and format SDP multimedia session descriptions (see RFC 2327 and
 draft-ietf-mmusic-sdp-new).
 
-   Copyright (C) 2001, 2002, 2003 Federico Montesino Pouzols
-<fedemp@altern.org>.
+   Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006 Federico Montesino
+Pouzols <fedemp@altern.org>.
 
    Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.2 or
@@ -23,14 +23,15 @@ Documentation License".
 
 File: freesdp.info,  Node: Top,  Next: Introduction,  Up: (dir)
 
-
+FreeSDP - A Free SDP Parser and Formatter
+*****************************************
 
 This document describes FreeSDP, a library for parsing and formatting
 SDP multimedia session descriptions. SDP is the Session Description
 Protocol from the IETF (see `RFC 2327' and `draft-ietf-mmusic-sdp-new').
 
-   This is the edition 0.4.0 of this manual and documents FreeSDP
-version 0.4.0.
+   This is the edition 0.5.0 of this manual and documents FreeSDP
+version 0.5.0.
 
 * Menu:
 
@@ -51,8 +52,8 @@ version 0.4.0.
 
 File: freesdp.info,  Node: Introduction,  Next: FreeSDP Overview,  Prev: Top,  Up: Top
 
-Introduction
-************
+1 Introduction
+**************
 
 FreeSDP is a C library that provides a complete set of functions to
 fetch the information multimedia session descriptions in SDP format
@@ -99,7 +100,7 @@ good introduction to multimedia session description.
 
    Note that this document is not a reference manual for FreeSDP. The
 reference manual is automatically generated from source files through
-Doxygen (see <http://www.doxygen.org>) under the doc/refman directory
+Doxygen (see `http://www.doxygen.org') under the doc/refman directory
 in the source distribution.
 
    In section *Note FreeSDP Overview::, a brief description of the
@@ -120,8 +121,8 @@ FreeSDP are expected to evolve.
 
 File: freesdp.info,  Node: FreeSDP Overview,  Next: Standards Tracking,  Prev: Introduction,  Up: Top
 
-FreeSDP Overview
-****************
+2 FreeSDP Overview
+******************
 
 FreeSDP provides a complete set of entry points to parse and format
 FreeSDP descriptions. It aims to be minimal, secure and fast, as well
@@ -172,8 +173,8 @@ minimal standard SDP description.
 
 File: freesdp.info,  Node: Standards Tracking,  Next: Using FreeSDP,  Prev: FreeSDP Overview,  Up: Top
 
-Standards Tracking
-******************
+3 Standards Tracking
+********************
 
      *Warning:* This chapter is yet uncomplete and subject to quick
      changes.
@@ -187,20 +188,25 @@ with.
    The primary means for extending FreeSDP are attributes, and they can
 be registered with IANA, see the `Session Description Protocol (SDP)
 Parameters' list at IANA
-(<http://www.iana.org/assignments/sdp-parameters>).
+(`http://www.iana.org/assignments/sdp-parameters').
 
    What follows is a list of SDP related RFCs, Internet Drafts and other
 documents, with notes on the conformance degree currently provided by
-FreeSDP:
+FreeSDP.
+
+   Core SDP specification:
 
    * `SDP: Session Description Protocol (RFC 2327)'.
+
+   * `SDP: Session Description Protocol (draft-ietf-mmusic-sdp-new)'.
+
+
+   Extensions to SDP:
 
    * `Session Description Protocol Bandwidth Modifiers for RTP Control
      Protocol Bandwidth (RFC 3556)'. RS and RR bandwidth modifiers to
      specify RTCP bandwith reserved for senders and receivers,
      respectively.
-
-   * `SDP: Session Description Protocol (draft-ietf-mmusic-sdp-new)'.
 
    * `RTCP Atribute in SDP (RFC 3606)', definition of the `rtcp'
      attribute.
@@ -227,12 +233,21 @@ FreeSDP:
    * `RFC 3066' and `RFC 3282'. Language list specification relevant
      for 'lang' and 'sdplang' attribrutes.
 
+   * `draft-ietf-avt-srtp'. RTP/SAVP Secure RTP profile for audio and
+     video transport.
+
+   * `draft-ietf-avt-rtcp-feedback'. RTP/AVPF extended RTP profile for
+     RTCP-based feedback.
+
+   * `draft-ietf-avt-profile-savpf'. RTP/SAVPF extended secure RTP
+     profile for RTCP-based feedback.
+
 
 
 File: freesdp.info,  Node: Using FreeSDP,  Next: Parsing,  Prev: Standards Tracking,  Up: Top
 
-Using FreeSDP
-*************
+4 Using FreeSDP
+***************
 
 The FreeSDP programming interface is made up of functions that
 manipulate multimedia session description objects. The interface is
@@ -267,8 +282,31 @@ programs (name mangling is switched off for the symbols exported from
 FreeSDP).
 
    The source distribution of FreeSDP includes, under the demo
-directory, two files called parsedemo.c and formatdemo, which
+directory, two files called parsedemo.c and formatdemo.c, which
 illustrate the use of the parsing and formattin modules, respectively.
+
+   In order to introduce the most commonly used types defined in
+FreeSDP, a short overview of SDP descriptions follows. An SDP session
+description consists of a session-level section and zero or more
+media-level sections.
+
+   Each SDP multimedia session description includes:
+   - Session name and purpose.
+
+   - List of time periods the session is active.
+
+   - Contact information for the responsible for the session (session
+     owner).
+
+   - Media used in the session.
+
+   - Network, transport and application level parameters for the
+     session: network addresses, transport ports, media formats, etc.
+
+   - Information about the session bandwidth.
+
+   FreeSDP defines specific types for SDP descriptions and its
+components:
 
    The type used in FreeSDP to represent SDP descriptions is
 fsdp_description_t.
@@ -305,43 +343,28 @@ fsdp_description_t.
 
    `fsdp_media_str_att_t'
 
-   An SDP session description consists of a session-level section and
-zero or more media-level sections.
-
-   Each SDP multimedia session description includes:
-   - Session name and purpose.
-
-   - List of time periods the session is active.
-
-   - Contact information for the responsible for the session (session
-     owner).
-
-   - Media used in the session.
-
-   - Network, transport and application level parameters for the
-     session: network addresses, transport ports, media formats, etc.
-
-   - Information about the session bandwidth.
-
 
 File: freesdp.info,  Node: Parsing,  Next: Formatting,  Prev: Using FreeSDP,  Up: Top
 
-Parsing
-*******
+5 Parsing
+*********
 
 The following code parses an SDP description:
 
      #include <freesdp/parser.h>
-     
+
      int
      main ( char argc, char *argv[] )
      {
              fsdp_description_t dsc;
-     
+
              fsdp_parse(...);
      }
 
    _TODO_: Error codes:
+
+   In addition to the error code, the text that caused the error can be
+retrieved using fsdp_get_wrong_string.
 
    there are several error codes in the form of `FSDPE_XXXX_MISSING',
 such as `FSDPE_VERSION_MISSING' and `FSDPE_OWNER_MISSING'. These
@@ -356,39 +379,39 @@ be illegal according to the SDP syntax.)
 
 File: freesdp.info,  Node: Formatting,  Next: FreeSDP Internals,  Prev: Parsing,  Up: Top
 
-Formatting
-**********
+6 Formatting
+************
 
 Once a media announcement object is incorporated into a session
 announcement object, see the fsdp_add_media function, the media object
 must not be destroyed as long as the session object exists. Media
 objects can be incorporated into more than one session at the same time.
 
- - Function: fsdp_make_description *dsc sdp_version *session_name
+ -- Function: fsdp_make_description *dsc sdp_version *session_name
           *session_id *announcement_version *owner_username *owner_nt
           *owner_at *owner_address start stop
      `fsdp_make_description' builds an object with the minimun required
      information. The resulting object is ready to format an SDP
      description throuth a call to `fsdp_format'.
 
- - Function: fsdp_format *dsc **text_description
+ -- Function: fsdp_format *dsc **text_description
      `fsdp_format' formats the description in dsc into description
 
- - Function: fsdp_format_bounded *dsc **text_description maxsize
+ -- Function: fsdp_format_bounded *dsc **text_description maxsize
      `fsdp_format_bounded' is a lower level routine. It limits the size
      of the resulting text to MAXSIZE.
 
- - Function: fsdp_make_media **mdsc type *port tp *formats
+ -- Function: fsdp_make_media **mdsc type *port tp *formats
      Allocates a new media announcements `fsdp_media_announcement_t'
 
- - Function: fsdp_add_media *dsc *mdsc
+ -- Function: fsdp_add_media *dsc *mdsc
      Incorporate a media announcement into a session announcement.
 
 
 File: freesdp.info,  Node: FreeSDP Internals,  Next: Other Related Works,  Prev: Formatting,  Up: Top
 
-FreeSDP Internals
-*****************
+7 FreeSDP Internals
+*******************
 
 TODO: characters set ISO-10646 in UTF-8 encoding. (Something should be
 said about this on the introductio).
@@ -438,7 +461,7 @@ session-level attributes and specific media-level attributes)...
 
    FreeSDP is documented with Doxygen. (special comments)
 
- - Function: fsdp_parse (fasd fdf *f, fdf pp)
+ -- Function: fsdp_parse (fasd fdf *f, fdf pp)
      First, session-level description lines are parsed. Then,
      media-level description lines are parsed.
 
@@ -452,7 +475,7 @@ be permanent, bounded or unbounded) encryption keys
 
    The ABNF syntax is given in RFC 2327
 
- - Macro: NEXT_LINE c
+ -- Macro: NEXT_LINE c
      advance char pointer `c' up to the first character after the first
      new line.
 
@@ -464,12 +487,12 @@ media-level or both.
 
 File: freesdp.info,  Node: Other Related Works,  Next: Future Work,  Prev: FreeSDP Internals,  Up: Top
 
-Other Related Works
-*******************
+8 Other Related Works
+*********************
 
    * GNU oSIP. is a C library for the SIP protocol that implements SIP
      messages parsing as well as the four finite state machines. See
-     <http://www.gnu.org/software/osip> for more information.
+     `http://www.gnu.org/software/osip' for more information.
 
    * NIST SIP, which is a Java library that implements SIP and SDP.
 
@@ -477,8 +500,8 @@ Other Related Works
 
 File: freesdp.info,  Node: Future Work,  Next: Licenses,  Prev: Other Related Works,  Up: Top
 
-Future Work
-***********
+9 Future Work
+*************
 
 Obviously, the evolution of FreeSDP is tightly tied to the evolution of
 the SDP protocol. The FreeSDP core is not expected to change or grow a
@@ -502,8 +525,8 @@ newest, as of this writing, `draft-ietf-mmusic-sdp-new'.
 
 File: freesdp.info,  Node: Licenses,  Next: Data Type Index,  Prev: Future Work,  Up: Top
 
-Licenses
-********
+Appendix A Licenses
+*******************
 
 * Menu:
 
@@ -513,13 +536,14 @@ Licenses
 
 File: freesdp.info,  Node: GNU Free Documentation License,  Next: GNU General Public License,  Up: Licenses
 
-GNU Free Documentation License
-==============================
+A.1 GNU Free Documentation License
+==================================
 
                       Version 1.2, November 2002
+
      Copyright (C) 2000,2001,2002 Free Software Foundation, Inc.
      59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
-     
+
      Everyone is permitted to copy and distribute verbatim copies
      of this license document, but changing it is not allowed.
 
@@ -910,8 +934,8 @@ GNU Free Documentation License
      you may choose any version ever published (not as a draft) by the
      Free Software Foundation.
 
-ADDENDUM: How to use this License for your documents
-----------------------------------------------------
+A.1.1 ADDENDUM: How to use this License for your documents
+----------------------------------------------------------
 
 To use this License in a document you have written, include a copy of
 the License in the document and put the following copyright and license
@@ -944,19 +968,19 @@ permit their use in free software.
 
 File: freesdp.info,  Node: GNU General Public License,  Prev: GNU Free Documentation License,  Up: Licenses
 
-GNU GENERAL PUBLIC LICENSE
-==========================
+A.2 GNU GENERAL PUBLIC LICENSE
+==============================
 
                          Version 2, June 1991
 
      Copyright (C) 1989, 1991 Free Software Foundation, Inc.
      59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
-     
+
      Everyone is permitted to copy and distribute verbatim copies
      of this license document, but changing it is not allowed.
 
-Preamble
---------
+A.2.1 Preamble
+--------------
 
 The licenses for most software are designed to take away your freedom
 to share and change it.  By contrast, the GNU General Public License is
@@ -1213,7 +1237,6 @@ modification follow.
      and reuse of software generally.
 
                                 NO WARRANTY
-
  11. BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO
      WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE
      LAW.  EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT
@@ -1237,9 +1260,8 @@ modification follow.
      ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
                       END OF TERMS AND CONDITIONS
-
-Appendix: How to Apply These Terms to Your New Programs
--------------------------------------------------------
+A.2.2 Appendix: How to Apply These Terms to Your New Programs
+-------------------------------------------------------------
 
 If you develop a new program, and you want it to be of the greatest
 possible use to the public, the best way to achieve this is to make it
@@ -1253,17 +1275,17 @@ the "copyright" line and a pointer to where the full notice is found.
 
      ONE LINE TO GIVE THE PROGRAM'S NAME AND A BRIEF IDEA OF WHAT IT DOES.
      Copyright (C) YYYY  NAME OF AUTHOR
-     
+
      This program is free software; you can redistribute it and/or modify
      it under the terms of the GNU General Public License as published by
      the Free Software Foundation; either version 2 of the License, or
      (at your option) any later version.
-     
+
      This program is distributed in the hope that it will be useful,
      but WITHOUT ANY WARRANTY; without even the implied warranty of
      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
      GNU General Public License for more details.
-     
+
      You should have received a copy of the GNU General Public License
      along with this program; if not, write to the Free Software
      Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -1291,7 +1313,7 @@ if necessary.  Here is a sample; alter the names:
 
      Yoyodyne, Inc., hereby disclaims all copyright interest in the program
      `Gnomovision' (which makes passes at compilers) written by James Hacker.
-     
+
      SIGNATURE OF TY COON, 1 April 1989
      Ty Coon, President of Vice
 
@@ -1307,24 +1329,25 @@ File: freesdp.info,  Node: Data Type Index,  Next: Function Index,  Prev: Licens
 Data Type Index
 ***************
 
+ [index ]
 * Menu:
 
-* fsdp_address_type_t:                   Using FreeSDP.
-* fsdp_bw_modifier_type_t:               Using FreeSDP.
-* fsdp_description_t:                    Using FreeSDP.
-* fsdp_encryption_method_t:              Using FreeSDP.
-* fsdp_error_t:                          Using FreeSDP.
-* fsdp_media_announcement_t:             Using FreeSDP.
-* fsdp_media_str_att_t:                  Using FreeSDP.
-* fsdp_media_t:                          Using FreeSDP.
-* fsdp_network_type_t:                   Using FreeSDP.
-* fsdp_orient_t:                         Using FreeSDP.
-* fsdp_repeat_t:                         Using FreeSDP.
-* fsdp_sendrecv_mode_t:                  Using FreeSDP.
-* fsdp_session_str_att_t:                Using FreeSDP.
-* fsdp_session_type_t:                   Using FreeSDP.
-* fsdp_time_period_t:                    Using FreeSDP.
-* fsdp_transport_protocol_t:             Using FreeSDP.
+* fsdp_address_type_t:                   Using FreeSDP.        (line 74)
+* fsdp_bw_modifier_type_t:               Using FreeSDP.        (line 86)
+* fsdp_description_t:                    Using FreeSDP.        (line 65)
+* fsdp_encryption_method_t:              Using FreeSDP.        (line 88)
+* fsdp_error_t:                          Using FreeSDP.        (line 70)
+* fsdp_media_announcement_t:             Using FreeSDP.        (line 68)
+* fsdp_media_str_att_t:                  Using FreeSDP.        (line 98)
+* fsdp_media_t:                          Using FreeSDP.        (line 82)
+* fsdp_network_type_t:                   Using FreeSDP.        (line 72)
+* fsdp_orient_t:                         Using FreeSDP.        (line 92)
+* fsdp_repeat_t:                         Using FreeSDP.        (line 78)
+* fsdp_sendrecv_mode_t:                  Using FreeSDP.        (line 90)
+* fsdp_session_str_att_t:                Using FreeSDP.        (line 96)
+* fsdp_session_type_t:                   Using FreeSDP.        (line 94)
+* fsdp_time_period_t:                    Using FreeSDP.        (line 80)
+* fsdp_transport_protocol_t:             Using FreeSDP.        (line 76)
 
 
 File: freesdp.info,  Node: Function Index,  Next: Concept Index,  Prev: Data Type Index,  Up: Top
@@ -1332,18 +1355,20 @@ File: freesdp.info,  Node: Function Index,  Next: Concept Index,  Prev: Data Typ
 Function Index
 **************
 
+ [index ]
 * Menu:
 
-* fsdp_add_media:                        Formatting.
-* fsdp_description_clone:                FreeSDP Internals.
-* fsdp_format <1>:                       Formatting.
-* fsdp_format:                           FreeSDP Overview.
-* fsdp_format_bounded:                   Formatting.
-* fsdp_make_description:                 Formatting.
-* fsdp_make_media:                       Formatting.
-* fsdp_parse <1>:                        FreeSDP Internals.
-* fsdp_parse:                            FreeSDP Overview.
-* NEXT_LINE:                             FreeSDP Internals.
+* fsdp_add_media:                        Formatting.           (line 29)
+* fsdp_description_clone:                FreeSDP Internals.    (line 31)
+* fsdp_format <1>:                       Formatting.           (line 19)
+* fsdp_format:                           FreeSDP Overview.     (line 32)
+* fsdp_format_bounded:                   Formatting.           (line 22)
+* fsdp_get_wrong_string:                 Parsing.              (line 20)
+* fsdp_make_description:                 Formatting.           (line 14)
+* fsdp_make_media:                       Formatting.           (line 26)
+* fsdp_parse <1>:                        FreeSDP Internals.    (line 55)
+* fsdp_parse:                            FreeSDP Overview.     (line 23)
+* NEXT_LINE:                             FreeSDP Internals.    (line 69)
 
 
 File: freesdp.info,  Node: Concept Index,  Prev: Function Index,  Up: Top
@@ -1351,140 +1376,150 @@ File: freesdp.info,  Node: Concept Index,  Prev: Function Index,  Up: Top
 Concept Index
 *************
 
+ [index ]
 * Menu:
 
-* ABNF:                                  FreeSDP Internals.
-* ABNF syntax:                           FreeSDP Internals.
-* announcement type:                     Using FreeSDP.
-* ATM:                                   Standards Tracking.
-* attribute:                             Standards Tracking.
-* attributes types:                      Using FreeSDP.
-* bandwdith modifier:                    Standards Tracking.
-* C <1>:                                 Using FreeSDP.
-* C:                                     Introduction.
-* C programming language:                Introduction.
-* C++:                                   Using FreeSDP.
-* Capability Declaration:                Standards Tracking.
-* capability declaration:                Standards Tracking.
-* cdsc:                                  Standards Tracking.
-* conf-status:                           Standards Tracking.
-* cpar:                                  Standards Tracking.
-* cparmax:                               Standards Tracking.
-* cparmin:                               Standards Tracking.
-* current-status:                        Standards Tracking.
-* desired-status:                        Standards Tracking.
-* draft-ietf-mmusic-sdp-new:             Standards Tracking.
-* error type:                            Using FreeSDP.
+* ABNF:                                  FreeSDP Internals.    (line 66)
+* ABNF syntax:                           FreeSDP Internals.    (line 66)
+* announcement type:                     Using FreeSDP.        (line 65)
+* ATM:                                   Standards Tracking.   (line 41)
+* attribute:                             Standards Tracking.   (line 15)
+* attributes types:                      Using FreeSDP.        (line 84)
+* AVPF:                                  Standards Tracking.   (line 66)
+* bandwdith modifier:                    Standards Tracking.   (line 33)
+* C <1>:                                 Using FreeSDP.        (line 34)
+* C:                                     Introduction.         (line  6)
+* C programming language:                Introduction.         (line  6)
+* C++:                                   Using FreeSDP.        (line 34)
+* Capability Declaration:                Standards Tracking.   (line 56)
+* capability declaration:                Standards Tracking.   (line 50)
+* cdsc:                                  Standards Tracking.   (line 56)
+* conf-status:                           Standards Tracking.   (line 52)
+* cpar:                                  Standards Tracking.   (line 56)
+* cparmax:                               Standards Tracking.   (line 56)
+* cparmin:                               Standards Tracking.   (line 56)
+* current-status:                        Standards Tracking.   (line 52)
+* desired-status:                        Standards Tracking.   (line 52)
+* draft-ietf-mmusic-sdp-new:             Standards Tracking.   (line 28)
+* error type:                            Using FreeSDP.        (line 70)
 * FDL, GNU Free Documentation License:   GNU Free Documentation License.
-* formatter.h:                           Using FreeSDP.
-* Formatting:                            Formatting.
-* Formatting descriptions:               Formatting.
-* Formatting FreeSDP:                    Formatting.
-* Formatting module:                     FreeSDP Overview.
-* FreeSDP Internals:                     FreeSDP Internals.
-* FreeSDP Overview:                      FreeSDP Overview.
-* freesdp/formatter.h:                   Formatting.
-* freesdp/parser.h:                      Parsing.
-* freesdpf:                              Using FreeSDP.
-* freesdpp:                              Using FreeSDP.
-* FSDPE_NAME_EMPTY:                      Parsing.
-* FSDPE_OWNER_MISSING:                   Parsing.
-* FSDPE_VERSION_MISSING:                 Parsing.
-* Future, Future Work:                   Future Work.
-* GNU oSIP:                              Other Related Works.
-* IANA:                                  Standards Tracking.
-* IETF <1>:                              Standards Tracking.
-* IETF:                                  Introduction.
-* IETF standards:                        Standards Tracking.
-* Internet:                              Introduction.
-* Internet Engineering Task Force:       Introduction.
-* Introduction:                          Introduction.
-* IPv6:                                  Standards Tracking.
-* ISO-10646:                             FreeSDP Internals.
-* ITU-T:                                 Standards Tracking.
-* ITU-T Rec. T.38 Annex D:               Standards Tracking.
-* lang:                                  Standards Tracking.
-* libfreesdpf:                           Using FreeSDP.
-* libfreesdpp:                           Using FreeSDP.
-* maxptime:                              Standards Tracking.
-* Mbone:                                 Introduction.
-* media description type:                Using FreeSDP.
-* media type:                            Using FreeSDP.
-* Minimality:                            FreeSDP Overview.
-* MMUSIC:                                Introduction.
-* multicast:                             Introduction.
+                                                               (line  6)
+* formatter.h:                           Using FreeSDP.        (line 16)
+* Formatting:                            Formatting.           (line  6)
+* Formatting descriptions:               Formatting.           (line  6)
+* Formatting FreeSDP:                    Formatting.           (line  6)
+* Formatting module:                     FreeSDP Overview.     (line 15)
+* FreeSDP Internals:                     FreeSDP Internals.    (line  6)
+* FreeSDP Overview:                      FreeSDP Overview.     (line  6)
+* freesdp/formatter.h:                   Formatting.           (line 11)
+* freesdp/parser.h:                      Parsing.              (line  6)
+* freesdpf:                              Using FreeSDP.        (line 16)
+* freesdpp:                              Using FreeSDP.        (line 12)
+* FSDPE_NAME_EMPTY:                      Parsing.              (line 31)
+* FSDPE_OWNER_MISSING:                   Parsing.              (line 20)
+* FSDPE_VERSION_MISSING:                 Parsing.              (line 20)
+* Future, Future Work:                   Future Work.          (line  6)
+* GNU oSIP:                              Other Related Works.  (line  6)
+* IANA:                                  Standards Tracking.   (line 15)
+* IETF <1>:                              Standards Tracking.   (line  9)
+* IETF:                                  Introduction.         (line 31)
+* IETF standards:                        Standards Tracking.   (line  9)
+* Internet:                              Introduction.         (line 23)
+* Internet Engineering Task Force:       Introduction.         (line 31)
+* Introduction:                          Introduction.         (line  6)
+* IPv6:                                  Standards Tracking.   (line 44)
+* ISO-10646:                             FreeSDP Internals.    (line  6)
+* ITU-T:                                 Standards Tracking.   (line 58)
+* ITU-T Rec. T.38 Annex D:               Standards Tracking.   (line 58)
+* lang:                                  Standards Tracking.   (line 60)
+* libfreesdpf:                           Using FreeSDP.        (line 16)
+* libfreesdpp:                           Using FreeSDP.        (line 12)
+* maxptime:                              Standards Tracking.   (line 46)
+* Mbone:                                 Introduction.         (line 23)
+* media description type:                Using FreeSDP.        (line 68)
+* media type:                            Using FreeSDP.        (line 68)
+* Minimality:                            FreeSDP Overview.     (line  6)
+* MMUSIC:                                Introduction.         (line 31)
+* multicast:                             Introduction.         (line 23)
 * Multipary Multimedia Session Control working group: Introduction.
-* Name mangling:                         Using FreeSDP.
+                                                               (line 31)
+* Name mangling:                         Using FreeSDP.        (line 34)
 * network and transport protocols related types: Using FreeSDP.
-* Other related works:                   Other Related Works.
-* parser.h:                              Using FreeSDP.
-* Parsing:                               Parsing.
-* Parsing descriptions:                  Parsing.
-* Parsing FreeSDP:                       Parsing.
-* Parsing module:                        FreeSDP Overview.
-* Printing:                              Formatting.
-* Printing descriptions:                 Formatting.
-* Printing FreeSDP:                      Formatting.
-* protocol extensions:                   Introduction.
-* Reference manual <1>:                  FreeSDP Internals.
-* Reference manual <2>:                  FreeSDP Overview.
-* Reference manual:                      Introduction.
-* RFC:                                   FreeSDP Internals.
-* RFC 2327 <1>:                          Standards Tracking.
-* RFC 2327:                              Introduction.
-* RFC 3108:                              Standards Tracking.
-* RFC 3266:                              Standards Tracking.
-* RFC 3267:                              Standards Tracking.
-* RFC 3307:                              Standards Tracking.
-* RFC 3312:                              Standards Tracking.
-* RFC 3388:                              Standards Tracking.
-* RFC 3435:                              Standards Tracking.
-* RFC 3556:                              Standards Tracking.
-* RFC 3605:                              Standards Tracking.
-* RR bandwidth modifier:                 Standards Tracking.
-* RS bandwdidth modifier:                Standards Tracking.
-* rtcp attribute:                        Standards Tracking.
-* SDP attribute:                         Standards Tracking.
-* SDP extensions:                        Introduction.
-* SDP formatting demo:                   Using FreeSDP.
-* SDP formatting example:                Using FreeSDP.
-* SDP parsing demo:                      Using FreeSDP.
-* SDP parsing example:                   Using FreeSDP.
-* SDP standard:                          Introduction.
-* SDP syntax:                            FreeSDP Internals.
-* sdplang:                               Standards Tracking.
-* Security:                              FreeSDP Overview.
-* session description type:              Using FreeSDP.
-* Simple Capability Declaration:         Standards Tracking.
-* SIP:                                   Other Related Works.
-* Speed:                                 FreeSDP Overview.
-* sqn:                                   Standards Tracking.
-* Standards tracking:                    Standards Tracking.
-* syntax:                                FreeSDP Internals.
-* Thread-safety:                         FreeSDP Overview.
-* time related types:                    Using FreeSDP.
-* Using FreeSDP:                         Using FreeSDP.
-* UTF-8:                                 FreeSDP Internals.
-* working group:                         Introduction.
+                                                               (line 72)
+* Other related works:                   Other Related Works.  (line  6)
+* parser.h:                              Using FreeSDP.        (line 12)
+* Parsing:                               Parsing.              (line  6)
+* Parsing descriptions:                  Parsing.              (line  6)
+* Parsing FreeSDP:                       Parsing.              (line  6)
+* Parsing module:                        FreeSDP Overview.     (line 15)
+* Printing:                              Formatting.           (line  6)
+* Printing descriptions:                 Formatting.           (line  6)
+* Printing FreeSDP:                      Formatting.           (line  6)
+* protocol extensions:                   Introduction.         (line 54)
+* Reference manual <1>:                  FreeSDP Internals.    (line 50)
+* Reference manual <2>:                  FreeSDP Overview.     (line 15)
+* Reference manual:                      Introduction.         (line 49)
+* RFC:                                   FreeSDP Internals.    (line 66)
+* RFC 2327 <1>:                          Standards Tracking.   (line 26)
+* RFC 2327:                              Introduction.         (line 43)
+* RFC 3108:                              Standards Tracking.   (line 41)
+* RFC 3266:                              Standards Tracking.   (line 44)
+* RFC 3267:                              Standards Tracking.   (line 46)
+* RFC 3307:                              Standards Tracking.   (line 50)
+* RFC 3312:                              Standards Tracking.   (line 52)
+* RFC 3388:                              Standards Tracking.   (line 54)
+* RFC 3435:                              Standards Tracking.   (line 56)
+* RFC 3556:                              Standards Tracking.   (line 33)
+* RFC 3605:                              Standards Tracking.   (line 38)
+* RR bandwidth modifier:                 Standards Tracking.   (line 33)
+* RS bandwdidth modifier:                Standards Tracking.   (line 33)
+* rtcp attribute:                        Standards Tracking.   (line 38)
+* RTCP-based feedback:                   Standards Tracking.   (line 66)
+* SAVP:                                  Standards Tracking.   (line 63)
+* SAVPF:                                 Standards Tracking.   (line 69)
+* SDP attribute:                         Standards Tracking.   (line 15)
+* SDP extensions:                        Introduction.         (line 54)
+* SDP formatting demo:                   Using FreeSDP.        (line 38)
+* SDP formatting example:                Using FreeSDP.        (line 38)
+* SDP parsing demo:                      Using FreeSDP.        (line 38)
+* SDP parsing example:                   Using FreeSDP.        (line 38)
+* SDP standard:                          Introduction.         (line 43)
+* SDP syntax:                            FreeSDP Internals.    (line 66)
+* sdplang:                               Standards Tracking.   (line 60)
+* Secure RTP:                            Standards Tracking.   (line 63)
+* Security:                              FreeSDP Overview.     (line  6)
+* session description type:              Using FreeSDP.        (line 65)
+* Simple Capability Declaration:         Standards Tracking.   (line 56)
+* SIP:                                   Other Related Works.  (line  6)
+* Speed:                                 FreeSDP Overview.     (line  6)
+* sqn:                                   Standards Tracking.   (line 56)
+* SRTP:                                  Standards Tracking.   (line 63)
+* Standards tracking:                    Standards Tracking.   (line  6)
+* syntax:                                FreeSDP Internals.    (line 66)
+* Thread-safety:                         FreeSDP Overview.     (line  6)
+* time related types:                    Using FreeSDP.        (line 78)
+* Using FreeSDP:                         Using FreeSDP.        (line  6)
+* UTF-8:                                 FreeSDP Internals.    (line  6)
+* working group:                         Introduction.         (line 31)
 
 
 
 Tag Table:
-Node: Top829
-Node: Introduction2053
-Node: FreeSDP Overview5447
-Node: Standards Tracking8080
-Node: Using FreeSDP10076
-Node: Parsing12946
-Node: Formatting13822
-Node: FreeSDP Internals15113
-Node: Other Related Works17905
-Node: Future Work18325
-Node: Licenses19344
-Node: GNU Free Documentation License19618
-Node: GNU General Public License42031
-Node: Data Type Index61257
-Node: Function Index62292
-Node: Concept Index62997
+Node: Top847
+Node: Introduction2154
+Node: FreeSDP Overview5552
+Node: Standards Tracking8189
+Node: Using FreeSDP10538
+Node: Parsing13607
+Node: Formatting14589
+Node: FreeSDP Internals15889
+Node: Other Related Works18687
+Node: Future Work19111
+Node: Licenses20134
+Node: GNU Free Documentation License20430
+Node: GNU General Public License42859
+Node: Data Type Index62090
+Node: Function Index63409
+Node: Concept Index64366
 
 End Tag Table

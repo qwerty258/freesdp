@@ -1,0 +1,46 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+my $input = shift;
+my $output = shift;
+
+print "Processing ";
+if ($input) {
+	print "'$input' ";
+} else {
+	$input = "stdin";
+	print "standard input ";
+}
+print "to produce ";
+if ( $output ) {
+	$output = "stdout";
+	print "'$output'\n";
+} else {
+	print "standard output\n";
+}
+
+open(IN,$input);
+#while (<IN>){
+#print ;
+#}
+
+my $rfc = "";
+$rfc = join $rfc, <IN>;
+
+# Page breaks break some SDP descriptions, so remove them
+# TODO print $rfc;
+
+my @matches = $rfc =~ /(\s*v=.+\n\s*o=.+\n\s*s=.*\n(\s*.=.*\n)+)+/g;
+if  ( $#matches >= 1 ) {
+    foreach my $m (@matches) {
+	if ( $m =~ /v=.+\n/ ) {      # filter out submatches
+	    $m =~ s/\s*(.=.*\n)/$1/g;  # remove spaces
+	    print "############################\n";
+	    print $m;
+	}
+    }
+}
+
+
+close(IN);
