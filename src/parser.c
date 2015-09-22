@@ -736,7 +736,16 @@ static fsdp_error_t
 fsdp_parse_c(const char **p, fsdp_network_type_t *ntype, 
 	     fsdp_address_type_t *atype, fsdp_connection_address_t *address)
 {
-  const unsigned int TEMPCHARS = 3;
+
+#ifdef _MSC_VER
+#ifdef TEMPCHARS
+#undef TEMPCHARS
+#endif // TEMPCHARS
+#define TEMPCHARS 3
+#else
+    const unsigned int TEMPCHARS = 3;
+#endif // _MSC_VER
+
   char fsdp_buf[TEMPCHARS][MAXSHORTFIELDLEN];
 
   if ( !strncmp(*p,"c=",2) ) { 
