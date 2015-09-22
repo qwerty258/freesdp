@@ -40,7 +40,7 @@
  * (not followed by a '\n') is found, returns
  */
 #define NEXT_LINE(c)                                                \
-({                                                                  \
+{                                                                   \
  while ((*(c) != '\0') && (*(c) != '\r') && (*(c) != '\n')) {       \
     (c)++;                                                          \
  }                                                                  \
@@ -54,7 +54,7 @@
        return FSDPE_ILLEGAL_CHARACTER;                              \
    }                                                                \
  }                                                                  \
-})
+}
 
 fsdp_error_t
 fsdp_parse(const char *text_description, fsdp_description_t *dsc)
