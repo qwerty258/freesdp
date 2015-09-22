@@ -30,6 +30,11 @@
 #include "priv.h"
 #include <freesdp/common.h>
 
+#ifdef _MSC_VER
+#include <stdlib.h>
+#endif // _MSC_VER
+
+
 fsdp_description_t*
 fsdp_description_new(void)
 {
