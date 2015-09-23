@@ -72,9 +72,10 @@ do_parse(const char *text, size_t len)
   return result;
 }
 
+#define MAX_SIZE 5000
+
 int main(int argc, char *argv[])
 {
-  const int MAX_SIZE = 5000;
   char text[MAX_SIZE], *filename = NULL;
   size_t size = MAX_SIZE;
   FILE *file = NULL;
