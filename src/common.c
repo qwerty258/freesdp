@@ -39,7 +39,7 @@ fsdp_description_t*
 fsdp_description_new(void)
 {
   unsigned int i;
-  fsdp_description_t *result = malloc(sizeof(fsdp_description_t));
+  fsdp_description_t *result = calloc(1,sizeof(fsdp_description_t));
   
   result->version = 0;
   result->o_username = result->o_session_id = 
