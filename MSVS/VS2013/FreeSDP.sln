@@ -11,6 +11,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "formatdemo", "formatdemo\fo
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "parsedemo", "parsedemo\parsedemo.vcxproj", "{1F6DEB0C-2031-4BD9-A4C9-BBA0E1C1381A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{35627A0C-2CB9-46BB-83B1-2593B21B8DDC} = {35627A0C-2CB9-46BB-83B1-2593B21B8DDC}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
