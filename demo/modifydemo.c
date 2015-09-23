@@ -21,9 +21,10 @@
 #include <stdlib.h>
 #include <freesdp/freesdp.h>
 
+#define MAX_SIZE 5000
+
 int main(int argc, char *argv[])
 {
-  const int MAX_SIZE = 5000;
   const char *filename = NULL;
   char text[MAX_SIZE];
   char *modified_text;
