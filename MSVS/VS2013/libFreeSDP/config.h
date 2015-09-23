@@ -1,11 +1,7 @@
 #ifndef FSDP_CONFIG_H
 #define FSDP_CONFIG_H
 
-#define STDC_HEADERS 1
-
-#ifdef _MSC_VER
-#define snprintf _snprintf
-#define strdup _strdup
-#endif // _MSC_VER
+#define STDC_HEADERS    1
+#define HAVE_STRTOF     1
 
 #endif // FSDP_CONFIG_H

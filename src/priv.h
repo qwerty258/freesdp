@@ -34,6 +34,12 @@
 #  include <stdio.h>
 #  include <stdlib.h>
 #  include <string.h>
+
+#ifdef _MSC_VER
+#define snprintf _snprintf
+#define strdup _strdup
+#endif // _MSC_VER
+
 # else
 #  if !HAVE_STRDUP
 #   error "Portability problem: strdup was not found in this system"
