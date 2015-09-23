@@ -25,14 +25,6 @@
 
 #include "formatterpriv.h"
 
-#ifdef _MSC_VER
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#define snprintf _snprintf
-#define strdup _strdup
-#endif // _MSC_VER
-
 const char *bandwidth_modifier_strings[] = {
   "", "", "CT", "AS", "RS", "RR" 
 };

@@ -30,13 +30,6 @@
  **/
 
 #include "parserpriv.h"
-#ifdef _MSC_VER
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#define strdup _strdup
-#endif // _MSC_VER
-
 
 /**
  * Moves the <code>c<code> pointer up to the beginning of the next

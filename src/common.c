@@ -30,11 +30,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "priv.h"
 #include <freesdp/common.h>
 
-#ifdef _MSC_VER
-#include <stdlib.h>
-#endif // _MSC_VER
-
-
 fsdp_description_t* fsdp_description_new(void)
 {
     fsdp_description_t* result = malloc(sizeof(fsdp_description_t));
