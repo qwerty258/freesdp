@@ -39,6 +39,9 @@
     <ClInclude Include="..\..\..\src\freesdp\parser.h">
       <Filter>Header Files\freesdp</Filter>
     </ClInclude>
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="libFreeSDP.def">
