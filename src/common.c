@@ -38,7 +38,8 @@
 fsdp_description_t* fsdp_description_new(void)
 {
     fsdp_description_t* result = malloc(sizeof(fsdp_description_t));
-  
+    if(NULL!=result)
+    {
     result->version = 0;
     result->o_username = NULL;
     result->o_session_id = NULL;
@@ -84,6 +85,7 @@ fsdp_description_t* fsdp_description_new(void)
     result->media_announcements_count = 0;
     result->unidentified_attributes = NULL;
     result->unidentified_attributes_count = 0;
+    }
 
     return result;
 }
