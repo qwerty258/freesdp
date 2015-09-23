@@ -18,39 +18,25 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\errorlist.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\parser.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\common.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\formatter.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\src\parserpriv.h">
+    <ClInclude Include="..\..\..\src\formatterpriv.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\priv.h">
+    <ClInclude Include="..\..\..\src\parserpriv.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\freesdp\common.h">
-      <Filter>Header Files\freesdp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\freesdp\parser.h">
-      <Filter>Header Files\freesdp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\formatterpriv.h">
+    <ClInclude Include="..\..\..\src\priv.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\freesdp\formatter.h">
+    <ClInclude Include="..\..\..\src\freesdp\common.h">
       <Filter>Header Files\freesdp</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\freesdp\freesdp.h">
+    <ClInclude Include="..\..\..\src\freesdp\formatter.h">
+      <Filter>Header Files\freesdp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\freesdp\freesdp.h">
+      <Filter>Header Files\freesdp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\freesdp\parser.h">
       <Filter>Header Files\freesdp</Filter>
     </ClInclude>
   </ItemGroup>
@@ -58,5 +44,19 @@
     <None Include="libFreeSDP.def">
       <Filter>Source Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\common.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\errorlist.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\formatter.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\parser.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
