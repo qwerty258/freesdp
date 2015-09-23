@@ -69,7 +69,7 @@ fsdp_description_t* fsdp_description_new(void)
         result->k_encryption_method = FSDP_ENCRYPTION_METHOD_UNDEFINED;
         result->k_encryption_content = NULL;
         /* Default/undefined values for attributes */
-        for(size_t i = 0; i < (FSDP_LAST_SESSION_STR_ATT + 1); i++)
+        for(unsigned int i = 0; i < (FSDP_LAST_SESSION_STR_ATT + 1); i++)
         {
             result->a_str_attributes[i] = NULL;
         }
@@ -86,48 +86,67 @@ fsdp_description_t* fsdp_description_new(void)
         result->unidentified_attributes = NULL;
         result->unidentified_attributes_count = 0;
     }
-
     return result;
 }
 
-void
-fsdp_description_delete(fsdp_description_t *dsc)
+void fsdp_description_delete(fsdp_description_t* dsc)
 {
     fsdp_description_recycle(dsc);
     free(dsc);
 }
 
-void fsdp_description_recycle(fsdp_description_t *dsc)
+void fsdp_description_recycle(fsdp_description_t* dsc)
 {
     /* Recursively free all strings and arrays */
     unsigned int i, j;
-
     if(NULL == dsc)
-      return;
-
+    {
+        return;
+    }
+    dsc->version = 0;
     free(dsc->o_username);
+    dsc->o_username = NULL;
     free(dsc->o_session_id);
+    dsc->o_session_id = NULL;
     free(dsc->o_announcement_version);
+    dsc->o_announcement_version = NULL;
+    dsc->o_network_type = FSDP_NETWORK_TYPE_UNDEFINED;
+    dsc->o_address_type = FSDP_ADDRESS_TYPE_UNDEFINED;
     free(dsc->o_address);
+    dsc->o_address = NULL;
     free(dsc->s_name);
+    dsc->s_name = NULL;
     free(dsc->i_information);
+    dsc->i_information = NULL;
     free(dsc->u_uri);
-
+    dsc->u_uri = NULL;
     for(i = 0; i < dsc->emails_count; i++)
-      free((char*)dsc->emails[i]);
+    {
+        free((char*)dsc->emails[i]);
+    }
     free(dsc->emails);
-
+    dsc->emails = NULL;
+    dsc->emails_count = 0;
     for(i = 0; i < dsc->phones_count; i++)
-      free((char*)dsc->phones[i]);
+    {
+        free((char*)dsc->phones[i]);
+    }
     free(dsc->phones);
-
+    dsc->phones = NULL;
+    dsc->phones_count = 0;
+    dsc->c_network_type = FSDP_NETWORK_TYPE_UNDEFINED;
+    dsc->c_address_type = FSDP_ADDRESS_TYPE_UNDEFINED;
     free(dsc->c_address.address);
+    dsc->c_address.address = NULL;
+    dsc->c_address.address_count = 0;
+    dsc->c_address.address_ttl = 0;
     for(i = 0; i < dsc->bw_modifiers_count; i++)
     {
         free(dsc->bw_modifiers[i].b_unknown_bw_modt);
     }
     free(dsc->bw_modifiers);
-
+    dsc->bw_modifiers = NULL;
+    dsc->bw_modifiers_count = 0;
     for(i = 0; i < dsc->time_periods_count; i++)
     {
         for(j = 0; j < dsc->time_periods[i]->repeats_count; j++)
@@ -139,33 +158,55 @@ void fsdp_description_recycle(fsdp_description_t *dsc)
         free(dsc->time_periods[i]);
     }
     free(dsc->time_periods);
-
-
+    dsc->time_periods = NULL;
+    dsc->time_periods_count = 0;
     free(dsc->timezone_adj);
+    dsc->timezone_adj = NULL;
+    dsc->k_encryption_method = FSDP_ENCRYPTION_METHOD_UNDEFINED;
+    free(dsc->k_encryption_content);
     for(i = 0; i < (FSDP_LAST_SESSION_STR_ATT + 1); i++)
-      free(dsc->a_str_attributes[i]);
+    {
+        free(dsc->a_str_attributes[i]);
+        dsc->a_str_attributes[i] = NULL;
+    }
     for(i = 0; i < dsc->a_rtpmaps_count; i++)
-      free(dsc->a_rtpmaps[i]);
+    {
+        free(dsc->a_rtpmaps[i]);
+    }
     free(dsc->a_rtpmaps);
+    dsc->a_rtpmaps = NULL;
+    dsc->a_rtpmaps_count = 0;
+    dsc->a_sendrecv_mode = FSDP_SENDRECV_UNDEFINED;
+    dsc->a_type = FSDP_SESSION_TYPE_UNDEFINED;
     for(i = 0; i < dsc->a_sdplangs_count; i++)
-      free(dsc->a_sdplangs[i]);
+    {
+        free(dsc->a_sdplangs[i]);
+    }
     free(dsc->a_sdplangs);
+    dsc->a_sdplangs = NULL;
+    dsc->a_sdplangs_count = 0;
     for(i = 0; i < dsc->a_langs_count; i++)
-      free(dsc->a_langs[i]);
+    {
+        free(dsc->a_langs[i]);
+    }
     free(dsc->a_langs);
-
+    dsc->a_langs = NULL;
+    dsc->a_langs_count = 0;
     for(i = 0; i < dsc->media_announcements_count; i++)
     {
         for(j = 0; j < dsc->media_announcements[i]->formats_count; j++)
-          free(dsc->media_announcements[i]->formats[j]);
+        {
+            free(dsc->media_announcements[i]->formats[j]);
+        }
         free(dsc->media_announcements[i]->formats);
         free(dsc->media_announcements[i]->i_title);
-        /*    free((dsc->media_announcements[i]->c_address).address);*/
+        free(dsc->media_announcements[i]->c_address.address);
         for(j = 0; j < dsc->media_announcements[i]->bw_modifiers_count; j++)
         {
-            if(FSDP_BW_MOD_TYPE_UNKNOWN ==
-             dsc->media_announcements[i]->bw_modifiers[j].b_mod_type)
-          free(dsc->media_announcements[i]->bw_modifiers[j].b_unknown_bw_modt);
+            if(FSDP_BW_MOD_TYPE_UNKNOWN == dsc->media_announcements[i]->bw_modifiers[j].b_mod_type)
+            {
+                free(dsc->media_announcements[i]->bw_modifiers[j].b_unknown_bw_modt);
+            }
         }
         free(dsc->media_announcements[i]->bw_modifiers);
         free(dsc->media_announcements[i]->k_encryption_content);
@@ -192,9 +233,8 @@ void fsdp_description_recycle(fsdp_description_t *dsc)
             free(dsc->media_announcements[i]->a_fmtps[j]);
         }
         free(dsc->media_announcements[i]->a_fmtps);
-        for(j = 0;
-          j < dsc->media_announcements[i]->unidentified_attributes_count;
-          j++)
+        free(dsc->media_announcements[i]->a_rtcp_address);
+        for(j = 0; j < dsc->media_announcements[i]->unidentified_attributes_count; j++)
         {
             free(dsc->media_announcements[i]->unidentified_attributes[j]);
         }
@@ -202,12 +242,6 @@ void fsdp_description_recycle(fsdp_description_t *dsc)
         free(dsc->media_announcements[i]);
     }
     free(dsc->media_announcements);
-
-    /* This prevents the user to make the library crash when incorrectly
-       using recycled but not rebuilt descriptions */
-    dsc->emails_count = 0;
-    dsc->phones_count = 0;
-    dsc->bw_modifiers_count = 0;
-    dsc->time_periods_count = 0;
+    dsc->media_announcements = NULL;
     dsc->media_announcements_count = 0;
 }
