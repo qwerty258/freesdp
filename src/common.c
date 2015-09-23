@@ -35,51 +35,57 @@
 #endif // _MSC_VER
 
 
-fsdp_description_t*
-fsdp_description_new(void)
+fsdp_description_t* fsdp_description_new(void)
 {
-  unsigned int i;
-  fsdp_description_t *result = calloc(1,sizeof(fsdp_description_t));
+    fsdp_description_t* result = malloc(sizeof(fsdp_description_t));
   
-  result->version = 0;
-  result->o_username = result->o_session_id = 
-    result->o_announcement_version = NULL; 
-  result->o_network_type = FSDP_NETWORK_TYPE_UNDEFINED;
-  result->o_address_type = FSDP_ADDRESS_TYPE_UNDEFINED;
-  result->o_address = NULL;
-  result->s_name = NULL;
-  result->i_information = NULL;
-  result->u_uri = NULL;
-  result->emails = NULL;
-  result->emails_count = 0;
-  result->phones = NULL;
-  result->phones_count = 0;
-  /* At first, there is no session-level definition for these
-     parameters */
-  result->c_network_type = FSDP_NETWORK_TYPE_UNDEFINED;
-  result->c_address_type = FSDP_ADDRESS_TYPE_UNDEFINED;
-  result->c_address.address = NULL;
-  /* there is no session-level definition for these parameters */
-  result->bw_modifiers = NULL;
-  result->bw_modifiers_count = 0;
-  result->time_periods = NULL;
-  result->time_periods_count = 0;
-  result->timezone_adj = NULL;
-  result->k_encryption_method = FSDP_ENCRYPTION_METHOD_UNDEFINED;
-  result->k_encryption_content = NULL;
-  /* Default/undefined values for attributes */
-  for ( i = 0; i < (FSDP_LAST_SESSION_STR_ATT + 1); i++ )
-    result->a_str_attributes[i] = NULL;
-  result->a_type = FSDP_SESSION_TYPE_UNDEFINED;
-  result->a_sendrecv_mode = FSDP_SENDRECV_UNDEFINED;
-  result->a_sdplangs = result->a_langs = NULL;
-  result->a_rtpmaps = NULL;
-  result->unidentified_attributes = NULL;
-  result->unidentified_attributes_count = 0;
-  result->media_announcements = NULL;
-  result->media_announcements_count = 0;
+    result->version = 0;
+    result->o_username = NULL;
+    result->o_session_id = NULL;
+    result->o_announcement_version = NULL;
+    result->o_network_type = FSDP_NETWORK_TYPE_UNDEFINED;
+    result->o_address_type = FSDP_ADDRESS_TYPE_UNDEFINED;
+    result->o_address = NULL;
+    result->s_name = NULL;
+    result->i_information = NULL;
+    result->u_uri = NULL;
+    result->emails = NULL;
+    result->emails_count = 0;
+    result->phones = NULL;
+    result->phones_count = 0;
+    /* At first, there is no session-level definition for these parameters */
+    result->c_network_type = FSDP_NETWORK_TYPE_UNDEFINED;
+    result->c_address_type = FSDP_ADDRESS_TYPE_UNDEFINED;
+    result->c_address.address = NULL;
+    result->c_address.address_count = 0;
+    result->c_address.address_ttl = 0;
+    /* there is no session-level definition for these parameters */
+    result->bw_modifiers = NULL;
+    result->bw_modifiers_count = 0;
+    result->time_periods = NULL;
+    result->time_periods_count = 0;
+    result->timezone_adj = NULL;
+    result->k_encryption_method = FSDP_ENCRYPTION_METHOD_UNDEFINED;
+    result->k_encryption_content = NULL;
+    /* Default/undefined values for attributes */
+    for(size_t i = 0; i < (FSDP_LAST_SESSION_STR_ATT + 1); i++)
+    {
+        result->a_str_attributes[i] = NULL;
+    }
+    result->a_rtpmaps = NULL;
+    result->a_rtpmaps_count = 0;
+    result->a_sendrecv_mode = FSDP_SENDRECV_UNDEFINED;
+    result->a_type = FSDP_SESSION_TYPE_UNDEFINED;
+    result->a_sdplangs = NULL;
+    result->a_sdplangs_count = 0;
+    result->a_langs = NULL;
+    result->a_langs_count = 0;
+    result->media_announcements = NULL;
+    result->media_announcements_count = 0;
+    result->unidentified_attributes = NULL;
+    result->unidentified_attributes_count = 0;
 
-  return result;
+    return result;
 }
 
 void
