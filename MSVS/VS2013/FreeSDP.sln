@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libFreeSDP", "libFreeSDP\libFreeSDP.vcxproj", "{35627A0C-2CB9-46BB-83B1-2593B21B8DDC}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "formatdemo", "formatdemo\formatdemo.vcxproj", "{8E84F128-3899-4538-B878-67333EA8A3DD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{35627A0C-2CB9-46BB-83B1-2593B21B8DDC} = {35627A0C-2CB9-46BB-83B1-2593B21B8DDC}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
