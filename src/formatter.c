@@ -25,45 +25,103 @@
 
 #include "formatterpriv.h"
 
-const char *bandwidth_modifier_strings[] = {
-    "", "", "CT", "AS", "RS", "RR"
+const char *
+bandwidth_modifier_strings[] =
+{
+    "",
+    "",
+    "CT",
+    "AS",
+    "RS",
+    "RR"
 };
 
-const char *network_type_strings[] = {
-    "", "IN"
+const char *
+network_type_strings[] =
+{
+    "",
+    "IN"
 };
 
-const char *address_type_strings[] = {
-    "", "IP4", "IP6"
+const char *
+address_type_strings[] =
+{
+    "",
+    "IP4",
+    "IP6"
 };
 
-const char *bw_mod_type_strings[] = {
-    "", "CT", "AS", "RS", "RR"
+const char *
+bw_mod_type_strings[] =
+{
+    "",
+    "CT",
+    "AS",
+    "RS",
+    "RR"
 };
 
-const char *encryption_method_strings[] = {
-    "", "clear", "base64", "uri"
+const char *
+encryption_method_strings[] =
+{
+    "",
+    "clear",
+    "base64",
+    "uri"
 };
 
-const char *sendrecv_mode_strings[] = {
-    "", "sendrecv", "recvonly", "sendonly", "inactive"
+const char *
+sendrecv_mode_strings[] =
+{
+    "",
+    "sendrecv",
+    "recvonly",
+    "sendonly",
+    "inactive"
 };
 
-const char *session_type_strings[] = {
-    "", "broadcast", "meeting", "moderated", "test", "H332"
+const char *session_type_strings[] =
+{
+    "",
+    "broadcast",
+    "meeting",
+    "moderated",
+    "test",
+    "H332"
 };
 
-const char *media_strings[] = {
-    "", "audio", "video", "text", "application", "data", "control"
+const char *media_strings[] =
+{
+    "",
+    "audio",
+    "video",
+    "text",
+    "application",
+    "data",
+    "control"
 };
 
-const char *tp_strings[] = {
-    "", "RTP/AVP", "RTP/SAVP", "RTP/AVPF", "RTP/SAVPF", "udp", "TCP", "UDPTL",
-    "vat", "rtp", "H.320"
+const char *tp_strings[] =
+{
+    "",
+    "RTP/AVP",
+    "RTP/SAVP",
+    "RTP/AVPF",
+    "RTP/SAVPF",
+    "udp",
+    "TCP",
+    "UDPTL",
+    "vat",
+    "rtp",
+    "H.320"
 };
 
-const char *orient_strings[] = {
-    "", "portrait", "landscape", "seascape"
+const char *orient_strings[] =
+{
+    "",
+    "portrait",
+    "landscape",
+    "seascape"
 };
 
 fsdp_error_t
