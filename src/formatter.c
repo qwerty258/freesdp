@@ -66,15 +66,19 @@ const char *orient_strings[] = {
     "", "portrait", "landscape", "seascape"
 };
 
-fsdp_error_t fsdp_make_description(fsdp_description_t **dsc,
-                                   unsigned int sdp_version,
-                                   const char *session_name, const char *session_id,
-                                   const char *announcement_version,
-                                   const char *owner_username,
-                                   fsdp_network_type_t owner_nt,
-                                   fsdp_address_type_t owner_at,
-                                   const char *owner_address,
-                                   time_t start, time_t stop)
+fsdp_error_t
+fsdp_make_description(
+    fsdp_description_t **dsc,
+    unsigned int sdp_version,
+    const char *session_name,
+    const char *session_id,
+    const char *announcement_version,
+    const char *owner_username,
+    fsdp_network_type_t owner_nt,
+    fsdp_address_type_t owner_at,
+    const char *owner_address,
+    time_t start,
+    time_t stop)
 {
     fsdp_description_t *obj;
 
