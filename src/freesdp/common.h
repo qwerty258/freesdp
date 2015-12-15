@@ -15,7 +15,7 @@
   You should have received a copy of the GNU General Public License
   along with this program; if not, write to the Free Software
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
+  */
 
 /**
  * @file common.h
@@ -54,10 +54,10 @@ BEGIN_C_DECLS
  * Data types and routines common for both parsing and formatting
  * modules.
  **/
-  
+
 /** @addtogroup common */
 /*@{*/
-  
+
 /**
  * @enum fsdp_error_t freesdp/common.h
  * @short Error codes in the FreeSDP library.
@@ -72,97 +72,80 @@ BEGIN_C_DECLS
  * which would cause a FSDPE_INVALID_CONNECTION error code to be
  * returned.
  **/
-typedef enum {
-  FSDPE_OK = 0,
-  FSDPE_ILLEGAL_CHARACTER,       /**< Misplaced '\r', '\n' or '\0' */
-  FSDPE_MISSING_VERSION,         /**< The first line is not like
-				    v=... */
-  FSDPE_INVALID_VERSION,         /**< Parse error in version line,
-				    perhaps, the version specified in
-				    v=... is not valid for FreeSDP */
-  FSDPE_MISSING_OWNER,           /**< No owner line found in its
-				    place */  
-  FSDPE_INVALID_OWNER,           /**< Parse error in owner line */
-  FSDPE_MISSING_NAME,            /**< No session name found in its
-				    place */  
-  FSDPE_EMPTY_NAME,              /**< Empty session name line */
-
-  FSDPE_INVALID_CONNECTION,      /**< Syntax error in connection
-				    line */
-  
-  FSDPE_INVALID_CONNECTION_ADDRTYPE, /**< Unrecognized address type in
-					connection line */
-  FSDPE_INVALID_CONNECTION_NETTYPE,  /**< Unrecognized network type in
-					connection line */
-  FSDPE_INVALID_BANDWIDTH,           /**< Parse error in bandwidth
-					line */
-  FSDPE_MISSING_TIME,            /**< No time period has been given
-				    for the session */  
-  FSDPE_INVALID_TIME,            /**< Parse error in time line */
-  FSDPE_INVALID_REPEAT,          /**< Parse error in repeat time
-				    line */
-  FSDPE_INVALID_TIMEZONE,        /**< Parse error in timezone line */
-  FSDPE_INVALID_ENCRYPTION_METHOD, /**< Unknown encryption method */
-  FSDPE_INVALID_ATTRIBUTE,       /**< Syntax error in an attribute
-				    line */
-  
-  FSDPE_INVALID_ATTRIBUTE_RTPMAP,/**< Parse error in a=rtpmap:... line */
-  FSDPE_INVALID_SESSION_TYPE,    /**< An unknown session type has been
-				    specified in a `type:'
-				    session-level attribute */
-  
-  FSDPE_INVALID_MEDIA,           /**< Parse error in media line */
-  FSDPE_UNKNOWN_MEDIA_TYPE,      /**< Unknown media type in media
-				    line */
-  
-  FSDPE_UNKNOWN_MEDIA_TRANSPORT, /**< A media transport has been
-				    specified that is unknown */
-  
-  FSDPE_OVERFILLED,              /**< extra unknown lines are at the
-				    end of the description */
-  FSDPE_INVALID_LINE,            /**< a line unknown to FreeSDP has been
-				    found */
-  FSDPE_MISSING_CONNECTION_INFO, /**< No connection information has
-				     been provided for the whole
-				     session nor one or more media */
-  FSDPE_INVALID_INDEX,
-  /*  FSDPE_MAXSIZE, description does not fit requested maximun size*/
-  FSDPE_INTERNAL_ERROR,
-
-  FSDPE_INVALID_PARAMETER,       /**< Some parameter of the called
-				       FreeSDP routine has been given an
-				       invalid value. This includes
-				       cases such as NULL pointers. */
-  FSDPE_BUFFER_OVERFLOW
+typedef enum
+{
+    FSDPE_OK = 0,
+    FSDPE_ILLEGAL_CHARACTER,            /**< Misplaced '\r', '\n' or '\0' */
+    FSDPE_MISSING_VERSION,              /**< The first line is not like v=... */
+    FSDPE_INVALID_VERSION,              /**< Parse error in version line, perhaps,
+                                             the version specified in v=...
+                                             is not valid for FreeSDP */
+    FSDPE_MISSING_OWNER,                /**< No owner line found in its place */
+    FSDPE_INVALID_OWNER,                /**< Parse error in owner line */
+    FSDPE_MISSING_NAME,                 /**< No session name found in its place */
+    FSDPE_EMPTY_NAME,                   /**< Empty session name line */
+    FSDPE_INVALID_CONNECTION,           /**< Syntax error in connection line */
+    FSDPE_INVALID_CONNECTION_ADDRTYPE,  /**< Unrecognized address type
+                                             in connection line */
+    FSDPE_INVALID_CONNECTION_NETTYPE,   /**< Unrecognized network type
+                                             in connection line */
+    FSDPE_INVALID_BANDWIDTH,            /**< Parse error in bandwidth line */
+    FSDPE_MISSING_TIME,                 /**< No time period has been given for the session */
+    FSDPE_INVALID_TIME,                 /**< Parse error in time line */
+    FSDPE_INVALID_REPEAT,               /**< Parse error in repeat time line */
+    FSDPE_INVALID_TIMEZONE,             /**< Parse error in timezone line */
+    FSDPE_INVALID_ENCRYPTION_METHOD,    /**< Unknown encryption method */
+    FSDPE_INVALID_ATTRIBUTE,            /**< Syntax error in an attribute line */
+    FSDPE_INVALID_ATTRIBUTE_RTPMAP,     /**< Parse error in a=rtpmap:... line */
+    FSDPE_INVALID_SESSION_TYPE,         /**< An unknown session type has been specified
+                                             in a `type:' session-level attribute */
+    FSDPE_INVALID_MEDIA,                /**< Parse error in media line */
+    FSDPE_UNKNOWN_MEDIA_TYPE,           /**< Unknown media type in media line */
+    FSDPE_UNKNOWN_MEDIA_TRANSPORT,      /**< A media transport has been specified
+                                             that is unknown */
+    FSDPE_OVERFILLED,                   /**< extra unknown lines are at the end of
+                                             the description */
+    FSDPE_INVALID_LINE,                 /**< a line unknown to FreeSDP has been found */
+    FSDPE_MISSING_CONNECTION_INFO,      /**< No connection information has been provided for
+                                             the whole session nor one or more media */
+    FSDPE_INVALID_INDEX,                /**< FSDPE_MAXSIZE, description does not fit
+                                             requested maximun size*/
+    FSDPE_INTERNAL_ERROR,
+    FSDPE_INVALID_PARAMETER,            /**< Some parameter of the called FreeSDP routine
+                                             has been given an invalid value.
+                                             This includes cases such as NULL pointers. */
+    FSDPE_BUFFER_OVERFLOW
 } fsdp_error_t;
-  
+
 /**
- * @short Type of network 
+ * @short Type of network
  *
  * Initially, SDP defines "Internet". New network types may be
  * registered with IANA. However, the number of types is expected to
  * be small and rarely extended. In addition, every new network type
  * requires at least one new address type.
  **/
-typedef enum {
-  FSDP_NETWORK_TYPE_UNDEFINED,                 /**< Not provided */
-  FSDP_NETWORK_TYPE_INET                       /**< Internet */ 
+typedef enum
+{
+    FSDP_NETWORK_TYPE_UNDEFINED,    /**< Not provided */
+    FSDP_NETWORK_TYPE_INET          /**< Internet */
 } fsdp_network_type_t;
-  
+
 /**
  * @short Type of address
  *
  * Initially, IPv4 and IPv6 are defined for the network type
  * Internet. New address types may be registered with IANA.
  **/
-typedef enum {
-  FSDP_ADDRESS_TYPE_UNDEFINED,                 /**< Not provided */
-  FSDP_ADDRESS_TYPE_IPV4,                     /**< IP version 4 */
-  FSDP_ADDRESS_TYPE_IPV6                      /**< IP version 6 */
+typedef enum
+{
+    FSDP_ADDRESS_TYPE_UNDEFINED,    /**< Not provided */
+    FSDP_ADDRESS_TYPE_IPV4,         /**< IP version 4 */
+    FSDP_ADDRESS_TYPE_IPV6          /**< IP version 6 */
 } fsdp_address_type_t;
-  
+
 /**
- * @short Type of bandwith modifiers 
+ * @short Type of bandwith modifiers
  *
  * Bandwidth modifiers specify the meaning of the bandwidth
  * value. Initially "Conference Total" and "Application Specific" are
@@ -171,17 +154,15 @@ typedef enum {
  * session bandwidth. "Application Specific" specifies thath the
  * bandwidth value is the application concept of maximum bandwidth.
  **/
-typedef enum { 
-  FSDP_BW_MOD_TYPE_UNDEFINED,            /**< Not provided */
-  FSDP_BW_MOD_TYPE_UNKNOWN,              /**< Unknown bandwidth
-						  modifier (FreeSDP
-						  ignores it) */
-  FSDP_BW_MOD_TYPE_CONFERENCE_TOTAL,     /**< "CT - Conference Total" */
-  FSDP_BW_MOD_TYPE_APPLICATION_SPECIFIC, /**< "AS - Application specific" */
-  FSDP_BW_MOD_TYPE_RTCP_SENDERS,         /**< "RS - RTCP bandwidth for
-					    senders */
-  FSDP_BW_MOD_TYPE_RTCP_RECEIVERS,       /**< "RR - RTCP bandwidth for
-					    receivers */
+typedef enum
+{
+    FSDP_BW_MOD_TYPE_UNDEFINED,             /**< Not provided */
+    FSDP_BW_MOD_TYPE_UNKNOWN,               /**< Unknown bandwidth modifier
+                                             (FreeSDP ignores it) */
+    FSDP_BW_MOD_TYPE_CONFERENCE_TOTAL,      /**< "CT - Conference Total" */
+    FSDP_BW_MOD_TYPE_APPLICATION_SPECIFIC,  /**< "AS - Application specific" */
+    FSDP_BW_MOD_TYPE_RTCP_SENDERS,          /**< "RS - RTCP bandwidth for senders */
+    FSDP_BW_MOD_TYPE_RTCP_RECEIVERS,        /**< "RR - RTCP bandwidth for receivers */
 } fsdp_bw_modifier_type_t;
 
 /**
@@ -189,18 +170,15 @@ typedef enum {
  *
  * The encryption method specifies the way to get the encryption key.
  **/
-typedef enum {
-  FSDP_ENCRYPTION_METHOD_UNDEFINED,    /**< Not provided */
-  FSDP_ENCRYPTION_METHOD_CLEAR,        /**< The key field is the
-						 untransformed key */
-  FSDP_ENCRYPTION_METHOD_BASE64,       /**< The key is base64
-					  encoded */
-  FSDP_ENCRYPTION_METHOD_URI,          /**< The key value provided is
-					  a URI pointing to the actual
-					  key */
-  FSDP_ENCRYPTION_METHOD_PROMPT        /**< The key is not provided
-					  but should be got prompting
-					  the user */
+typedef enum
+{
+    FSDP_ENCRYPTION_METHOD_UNDEFINED,   /**< Not provided */
+    FSDP_ENCRYPTION_METHOD_CLEAR,       /**< The key field is the untransformed key */
+    FSDP_ENCRYPTION_METHOD_BASE64,      /**< The key is base64 encoded */
+    FSDP_ENCRYPTION_METHOD_URI,         /**< The key value provided is a URI
+                                             pointing to the actual key */
+    FSDP_ENCRYPTION_METHOD_PROMPT       /**< The key is not provided but should be
+                                             got prompting the user */
 } fsdp_encryption_method_t;
 
 /**
@@ -212,12 +190,13 @@ typedef enum {
  * mode. FSDP_SENDRECV_SENDRECV is the default for sessions which are
  * not of the conference type broadcast or H332.
  **/
-typedef enum {
-  FSDP_SENDRECV_UNDEFINED,                    /**< Not specified */
-  FSDP_SENDRECV_SENDRECV,                     /**< Send and receive */
-  FSDP_SENDRECV_RECVONLY,                     /**< Receive only */
-  FSDP_SENDRECV_SENDONLY,                     /**< Send only */
-  FSDP_SENDRECV_INACTIVE                      /**< Do not send nor receive */
+typedef enum
+{
+    FSDP_SENDRECV_UNDEFINED,    /**< Not specified */
+    FSDP_SENDRECV_SENDRECV,     /**< Send and receive */
+    FSDP_SENDRECV_RECVONLY,     /**< Receive only */
+    FSDP_SENDRECV_SENDONLY,     /**< Send only */
+    FSDP_SENDRECV_INACTIVE      /**< Do not send nor receive */
 } fsdp_sendrecv_mode_t;
 
 /**
@@ -226,11 +205,12 @@ typedef enum {
  * Normally used with whiteboard media, this attribute specifies the
  * orientation of the whiteboard.
  **/
-typedef enum {
-  FSDP_ORIENT_UNDEFINED,                     /**< Not specified */
-  FSDP_ORIENT_PORTRAIT,                      /**< Portrait */
-  FSDP_ORIENT_LANDSCAPE,                     /**< Landscape */
-  FSDP_ORIENT_SEASCAPE                       /**< Upside down landscape */
+typedef enum
+{
+    FSDP_ORIENT_UNDEFINED,  /**< Not specified */
+    FSDP_ORIENT_PORTRAIT,   /**< Portrait */
+    FSDP_ORIENT_LANDSCAPE,  /**< Landscape */
+    FSDP_ORIENT_SEASCAPE    /**< Upside down landscape */
 } fsdp_orient_t;
 
 /**
@@ -239,13 +219,14 @@ typedef enum {
  * The following types are initially defined: broadcast, meeting,
  * moderated, test and H332.
  **/
-typedef enum {
-  FSDP_SESSION_TYPE_UNDEFINED,                 /**< Not specified */
-  FSDP_SESSION_TYPE_BROADCAST,                 /**< Broadcast session */
-  FSDP_SESSION_TYPE_MEETING,                   /**< Meeting session */
-  FSDP_SESSION_TYPE_MODERATED,                 /**< Moderated session */
-  FSDP_SESSION_TYPE_TEST,                      /**< Test (do not display) */
-  FSDP_SESSION_TYPE_H332                       /**< H332 session */
+typedef enum
+{
+    FSDP_SESSION_TYPE_UNDEFINED,    /**< Not specified */
+    FSDP_SESSION_TYPE_BROADCAST,    /**< Broadcast session */
+    FSDP_SESSION_TYPE_MEETING,      /**< Meeting session */
+    FSDP_SESSION_TYPE_MODERATED,    /**< Moderated session */
+    FSDP_SESSION_TYPE_TEST,         /**< Test (do not display) */
+    FSDP_SESSION_TYPE_H332          /**< H332 session */
 } fsdp_session_type_t;
 
 /**
@@ -254,14 +235,15 @@ typedef enum {
  * The following types are defined initially: audio, video,
  * application, data and control.
  **/
-typedef enum {
-  FSDP_MEDIA_UNDEFINED,            /**< Not specified */
-  FSDP_MEDIA_AUDIO,                /**< Audio */
-  FSDP_MEDIA_VIDEO,                /**< Video */
-  FSDP_MEDIA_TEXT,                 /**< Text */
-  FSDP_MEDIA_APPLICATION,          /**< Application, such as whiteboard */ 
-  FSDP_MEDIA_DATA,                 /**< bulk data */
-  FSDP_MEDIA_CONTROL,              /**< Control channel */
+typedef enum
+{
+    FSDP_MEDIA_UNDEFINED,   /**< Not specified */
+    FSDP_MEDIA_AUDIO,       /**< Audio */
+    FSDP_MEDIA_VIDEO,       /**< Video */
+    FSDP_MEDIA_TEXT,        /**< Text */
+    FSDP_MEDIA_APPLICATION, /**< Application, such as whiteboard */
+    FSDP_MEDIA_DATA,        /**< bulk data */
+    FSDP_MEDIA_CONTROL,     /**< Control channel */
 } fsdp_media_t;
 
 /**
@@ -271,22 +253,21 @@ typedef enum {
  * RTP over UDP Audio/Video Profile, and UDP are defined.
  *
  **/
-typedef enum {
-  FSDP_TP_UNDEFINED,              /**< Not specified */
-  FSDP_TP_RTP_AVP,                /**< RTP Audio/Video Profile */
-  FSDP_TP_RTP_SAVP,               /**< Secure RTP (RTP/SAVP profile) */
-  FSDP_TP_RTP_AVPF,               /**< Extended RTP profile for
-				     RTCP-based feedback (RTP/AVPF
-				     profile) */
-  FSDP_TP_RTP_SAVPF,               /**< Extended secure RTP profile
-				      for RTCP-based feedback
-				      (RTP/SAVPF profile) */
-  FSDP_TP_UDP,                    /**< UDP */
-  FSDP_TP_TCP,                    /**< TCP */
-  FSDP_TP_UDPTL,                  /**< ITU-T T.38*/
-  FSDP_TP_VAT,                    /**< old vat protocol (historic)*/
-  FSDP_TP_OLD_RTP,                /**< old rtp protocols (historic)*/
-  FSDP_TP_H320                    /**< TODO: add to the parser */
+typedef enum
+{
+    FSDP_TP_UNDEFINED,  /**< Not specified */
+    FSDP_TP_RTP_AVP,    /**< RTP Audio/Video Profile */
+    FSDP_TP_RTP_SAVP,   /**< Secure RTP (RTP/SAVP profile) */
+    FSDP_TP_RTP_AVPF,   /**< Extended RTP profile for RTCP-based feedback
+                             (RTP/AVPF profile) */
+    FSDP_TP_RTP_SAVPF,  /**< Extended secure RTP profile for RTCP-based
+                             feedback (RTP/SAVPF profile) */
+    FSDP_TP_UDP,        /**< UDP */
+    FSDP_TP_TCP,        /**< TCP */
+    FSDP_TP_UDPTL,      /**< ITU-T T.38*/
+    FSDP_TP_VAT,        /**< old vat protocol (historic)*/
+    FSDP_TP_OLD_RTP,    /**< old rtp protocols (historic)*/
+    FSDP_TP_H320        /**< TODO: add to the parser */
 } fsdp_transport_protocol_t;
 
 /**
@@ -295,12 +276,13 @@ typedef enum {
  * fsdp_get_strn_att() in order to get the corresponding value.
  *
  **/
-typedef enum {
-  FSDP_SESSION_STR_ATT_CATEGORY,
-  FSDP_SESSION_STR_ATT_KEYWORDS,
-  FSDP_SESSION_STR_ATT_TOOL,
-  FSDP_SESSION_STR_ATT_CHARSET,
-  FSDP_LAST_SESSION_STR_ATT = FSDP_SESSION_STR_ATT_CHARSET
+typedef enum
+{
+    FSDP_SESSION_STR_ATT_CATEGORY,
+    FSDP_SESSION_STR_ATT_KEYWORDS,
+    FSDP_SESSION_STR_ATT_TOOL,
+    FSDP_SESSION_STR_ATT_CHARSET,
+    FSDP_LAST_SESSION_STR_ATT = FSDP_SESSION_STR_ATT_CHARSET
 } fsdp_session_str_att_t;
 
 /**
@@ -328,7 +310,7 @@ typedef struct fsdp_description_t_s fsdp_description_t;
  *
  * @return new fsdp_description_t object
  **/
-fsdp_description_t* 
+fsdp_description_t*
 fsdp_description_new(void);
 
 /**
@@ -336,7 +318,7 @@ fsdp_description_new(void);
  *
  * @param dsc pointer to the fsdp_description_t object to delete.
  **/
-void 
+void
 fsdp_description_delete(fsdp_description_t *dsc);
 
 /**
@@ -348,14 +330,13 @@ fsdp_description_delete(fsdp_description_t *dsc);
  * @param dsc pointer to the fsdp_description_t object to
  * renew/recycle.
  **/
-void 
+void
 fsdp_description_recycle(fsdp_description_t *dsc);
 
 /**
- *  * Returns a string correspondent to the error number.
- *   *
- *    * @param err_no error number.
- *     **/
+ * Returns a string correspondent to the error number.
+ * @param err_no error number.
+ **/
 const char *
 fsdp_strerror(fsdp_error_t err_no);
 
