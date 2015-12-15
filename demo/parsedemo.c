@@ -59,10 +59,12 @@ fsdp_error_t do_parse(const char* text, size_t len)
 
     printf(" the description has %d unknown session level attributes:\n", fsdp_get_unidentified_attributes_count(dsc));
 
-    //for(i = 0; i < fsdp_get_unidentified_attribute_count(dsc); i++)
-    //{
-    //    printf("   #%d: %s\n", i + 1, fsdp_get_unidentified_attribute(dsc, i));
-    //}
+    /*
+    for(i = 0; i < fsdp_get_unidentified_attribute_count(dsc); i++)
+    {
+        printf("   #%d: %s\n", i + 1, fsdp_get_unidentified_attribute(dsc, i));
+    }
+    */
 
     /* Free the new fsdp_description_t object previously allocated */
     fsdp_description_delete(dsc);
