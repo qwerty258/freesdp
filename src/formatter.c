@@ -195,13 +195,21 @@ fsdp_error_t fsdp_format(const fsdp_description_t *dsc, char **text_description)
 fsdp_error_t fsdp_format_bounded(const fsdp_description_t *dsc, char *text_description, size_t maxsize)
 {
     unsigned int i = 0, len = 0;
+    int chars_written = 0;
 
     if((NULL == dsc) || (NULL == text_description))
-      return FSDPE_INVALID_PARAMETER;
+        return FSDPE_INVALID_PARAMETER;
 
     /* while ( len < maxsize ) */
     /* `v=' line (protocol version) */
-    len += snprintf(text_description, 100, "v=0\r\n");
+    chars_written = snprintf(
+        text_description,
+        maxsize - len,
+        "v=0\r\n");
+    if(0 < chars_written)
+    {
+        len += chars_written;
+    }
 
     /***************************************************************************/
     /* A) parse session-level description                                      */
