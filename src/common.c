@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 fsdp_description_t* fsdp_description_new(void)
 {
+    unsigned int i=0;
     fsdp_description_t* result = malloc(sizeof(fsdp_description_t));
     if(NULL != result)
     {
@@ -64,7 +65,7 @@ fsdp_description_t* fsdp_description_new(void)
         result->k_encryption_method = FSDP_ENCRYPTION_METHOD_UNDEFINED;
         result->k_encryption_content = NULL;
         /* Default/undefined values for attributes */
-        for(unsigned int i = 0; i < (FSDP_LAST_SESSION_STR_ATT + 1); i++)
+        for(i = 0; i < (FSDP_LAST_SESSION_STR_ATT + 1); i++)
         {
             result->a_str_attributes[i] = NULL;
         }
