@@ -163,12 +163,12 @@ fsdp_make_description(
     obj->o_address = strdup(owner_address);
     obj->s_name = strdup(session_name);
     obj->time_periods = calloc(TIME_PERIODS_MAX_COUNT, sizeof(fsdp_time_period_t*));
-    //obj->time_periods[0] = calloc(1, sizeof(fsdp_time_period_t));
-    //obj->time_periods[0]->start = start;
-    //obj->time_periods[0]->stop = stop;
-    obj->time_periods_count = 0;
-    //obj->time_periods[0]->repeats = calloc(REPEATS_MAX_COUNT, sizeof(fsdp_repeat_t*));
-    //obj->time_periods[0]->repeats_count = 0;
+    obj->time_periods[0] = calloc(1, sizeof(fsdp_time_period_t));
+    obj->time_periods[0]->start = start;
+    obj->time_periods[0]->stop = stop;
+    obj->time_periods_count = 1;
+    obj->time_periods[0]->repeats = calloc(REPEATS_MAX_COUNT, sizeof(fsdp_repeat_t*));
+    obj->time_periods[0]->repeats_count = 0;
 
     /* TODO: *dsc->built = 1; */
     return FSDPE_OK;
