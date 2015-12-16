@@ -187,6 +187,9 @@ fsdp_error_t fsdp_format(const fsdp_description_t *dsc, char **text_description)
     /* iterative calls to */
     fsdp_format_bounded(dsc, result, len);
 
+    if(NULL != ((fsdp_description_t *)dsc)->format_result)
+        free(((fsdp_description_t *)dsc)->format_result);
+    ((fsdp_description_t *)dsc)->format_result = result;
     *text_description = result;
 
     return FSDPE_OK;

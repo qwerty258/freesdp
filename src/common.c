@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 fsdp_description_t* fsdp_description_new(void)
 {
-    unsigned int i=0;
+    unsigned int i = 0;
     fsdp_description_t* result = malloc(sizeof(fsdp_description_t));
     if(NULL != result)
     {
@@ -81,6 +81,7 @@ fsdp_description_t* fsdp_description_new(void)
         result->media_announcements_count = 0;
         result->unidentified_attributes = NULL;
         result->unidentified_attributes_count = 0;
+        result->format_result = NULL;
     }
     return result;
 }
@@ -240,4 +241,6 @@ void fsdp_description_recycle(fsdp_description_t* dsc)
     free(dsc->media_announcements);
     dsc->media_announcements = NULL;
     dsc->media_announcements_count = 0;
+    free(dsc->format_result);
+    dsc->format_result = NULL;
 }

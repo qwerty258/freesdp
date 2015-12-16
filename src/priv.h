@@ -264,6 +264,8 @@ struct fsdp_description_t_s
     /* session attributes that are not directly supported */
     char **unidentified_attributes;
     unsigned int unidentified_attributes_count;
+    /* format result */
+    char *format_result;
 };
 
 #define MEDIA_RTPMAPS_MAX_COUNT 10
