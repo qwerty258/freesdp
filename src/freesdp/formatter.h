@@ -73,7 +73,7 @@ fsdp_make_description(
 /**
  * Store a multimedia session description formatted in SDP into
  * <code>description</code>. The properties must have been set in
- * <code>dsc</code>.
+ * <code>dsc</code>. You don't have to free text_description.
  *
  * @param dsc object from which session properties will be taken.
  * @param text_description a multimedia session description formatted in SDP.
