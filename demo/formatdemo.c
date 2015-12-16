@@ -88,7 +88,6 @@ int main(int argc, char* argv[])
 
     /* Free allocated description object and text */
     fsdp_description_delete(dsc);
-    free(text);
 
     return 0;
 }
